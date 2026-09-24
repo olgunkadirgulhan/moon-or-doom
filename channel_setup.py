@@ -141,7 +141,12 @@ def main():
         for it in items:
             s = it['status']
             print(f"durum {it['id']}: privacy={s.get('privacyStatus')} upload={s.get('uploadStatus')} "
+                  f"embeddable={s.get('embeddable')} madeForKids={s.get('madeForKids')} "
                   f"rejection={s.get('rejectionReason', '-')} failure={s.get('failureReason', '-')}")
+            if s.get('embeddable') is False:
+                step(f"video {it['id']} -> embeddable", lambda: yt.videos().update(part='status', body={
+                    'id': it['id'], 'status': {'privacyStatus': s['privacyStatus'], 'embeddable': True,
+                                               'publicStatsViewable': True, 'selfDeclaredMadeForKids': False}}).execute())
     print('\nElle yapılacak: branding/profile.png -> YouTube Studio > Customization > Branding > Picture')
 
 

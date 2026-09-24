@@ -49,7 +49,8 @@ def upload(mp4, title, description, tags, privacy, category='23'):
     tags = [clean(t) for t in tags]
     body = {
         'snippet': {'title': title, 'description': description, 'tags': tags, 'categoryId': category},
-        'status': {'privacyStatus': privacy, 'selfDeclaredMadeForKids': False, 'containsSyntheticMedia': False},
+        'status': {'privacyStatus': privacy, 'selfDeclaredMadeForKids': False, 'containsSyntheticMedia': False,
+                   'embeddable': True, 'publicStatsViewable': True},
     }
     req = client().videos().insert(part='snippet,status', body=body,
                                    media_body=MediaFileUpload(str(mp4), mimetype='video/mp4', resumable=True, chunksize=-1))
