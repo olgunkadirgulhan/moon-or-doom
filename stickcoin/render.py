@@ -156,7 +156,7 @@ def build_timeline(video, workdir, speed_mul=1.0):
             effects.append((L['speech'][1], audio.sfx('cry', i), 0.6))
         if short and i == n - 2 and line['char'] == 'charlie':
             effects.append((L['speech'][1] + 0.05, audio.sfx('rimshot', i), 0.7))
-        gap = 0.25
+        gap = 0.18 if short else 0.3  # Shorts: sıkı tempo (izlenme süresi)
         if i + 1 < n and video['lines'][i + 1].get('segment_start'):
             gap = 0.7
         t = L['speech'][1] + gap

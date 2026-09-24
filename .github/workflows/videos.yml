@@ -5,15 +5,16 @@ on:
     # TR ~16:00 ve ~23:00 (ABD sabah / öğleden sonra). Cron ~25 dk önce başlar (GitHub gecikmesi + render).
     - cron: "35 12 * * *"
     - cron: "35 19 * * *"
-    # Uzun video (16:9): Çarşamba 'majors' (piyasa değeri ilk 5), Pazar 'weekly' (haftanın 3+3 hareketlisi), TR ~18:30
-    - cron: "0 15 * * 3"
-    - cron: "0 15 * * 0"
+    # Uzun video (16:9), TR ~18:30: Salı 'explained' (trend 3 proje ne?), Cuma 'school' (Chart School dersi).
+    # Pazar/Çarşamba haftalık özet Whale Market Pulse'ta; aynı günleri ve konuyu kullanmıyoruz.
+    - cron: "0 15 * * 2"
+    - cron: "0 15 * * 5"
   workflow_dispatch:
     inputs:
       mode:
-        description: shorts | weekly | majors
+        description: shorts | explained | school | weekly | majors
         type: choice
-        options: [shorts, weekly, majors]
+        options: [shorts, explained, school, weekly, majors]
         default: shorts
       no_upload:
         description: Render only, do not upload
@@ -60,8 +61,8 @@ jobs:
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "m=${{ inputs.mode }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "0 15 * * 3" ]; then echo "m=majors" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" = "0 15 * * 0" ]; then echo "m=weekly" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 15 * * 2" ]; then echo "m=explained" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 15 * * 5" ]; then echo "m=school" >> $GITHUB_OUTPUT
           else echo "m=shorts" >> $GITHUB_OUTPUT; fi
       - name: Run pipeline
         env:

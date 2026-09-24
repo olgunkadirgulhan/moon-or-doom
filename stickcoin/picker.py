@@ -91,11 +91,25 @@ def build(m, reason, vid, mover_rank=None, trending_rank=None, info=True):
     return data
 
 
+_sibling = None
+
+
+def sibling_titles():
+    global _sibling
+    if _sibling is None:
+        _sibling = market.sibling_titles()
+        log(f'{len(_sibling)} recent sibling-channel uploads checked')
+    return _sibling
+
+
 def pick(kind, hist, vid, exclude=()):
-    """kind: 'gainer' | 'loser'. Sıradaki (48 saat kuralına takılmayan, grafiği olan) en uç hareketli."""
+    """kind: 'gainer' | 'loser'. Sıradaki (48 saat kuralına ve kardeş kanala takılmayan, grafiği olan) en uç hareketli."""
     lists, trend = movers()
     for rank, m in enumerate(lists[kind][:40], 1):
         if m['id'] in exclude or blocked(m['id'], m['current_price'], hist):
+            continue
+        if market.mentioned(m, sibling_titles()):
+            log(f"{m['symbol'].upper()}: covered by a sibling channel in the last 36h, skipped")
             continue
         data = build(m, f'top_{kind}_24h', vid, rank, trend.get(m['id']))
         if data:
@@ -104,10 +118,44 @@ def pick(kind, hist, vid, exclude=()):
     raise RuntimeError(f'no eligible {kind} found')
 
 
-def pick_long(kind, vid):
-    """Uzun videolar: 'weekly' = haftanın en çok yükselen 3 + düşen 3 (7g), 'majors' = piyasa değeri ilk 5."""
-    lists, _ = movers()
+def pick_long(kind, vid, hist=None):
+    """Uzun videolar:
+    explained  trend olan 3 proje (açıklaması olan, son 30 günde anlatılmamış, kardeş kanalda son 36 saatte yok)
+    school     kavram örnekleri: en büyük coin + günün en çok yükseleni + en çok düşeni
+    weekly     haftanın en çok yükselen 3 + düşen 3 (7g)      majors  piyasa değeri ilk 5
+    """
+    lists, trend = movers()
     out = []
+    if kind == 'explained':
+        since = now() - timedelta(days=30)
+        done = {c for v in (hist or {}).get('videos', []) if v.get('kind') == 'explained' and parse(v['date']) >= since
+                for c in v.get('coins', [])}
+        pool = sorted([m for m in lists['gainer'] if m['id'] in trend], key=lambda m: trend[m['id']]) + \
+            lists['gainer'][:15] + lists['loser'][:15]
+        seen = set()
+        for m in pool:
+            if len(out) == 3:
+                break
+            if m['id'] in seen or m['id'] in done or market.mentioned(m, sibling_titles()):
+                continue
+            seen.add(m['id'])
+            d = build(m, 'trending' if m['id'] in trend else 'mover', f'{vid}_{len(out) + 1}', len(out) + 1,
+                      trend.get(m['id']))
+            if d and len((d.get('info') or {}).get('description') or '') >= 120:
+                out.append(d)
+        return out
+    if kind == 'school':
+        big = sorted(lists['gainer'], key=lambda m: m.get('market_cap_rank') or 10 ** 6)
+        mixed = [m for pair in zip(lists['gainer'][:10], lists['loser'][:10]) for m in pair]
+        for m in [big[0]] + mixed:
+            if len(out) == 3:
+                break
+            if any(d['coin']['id'] == m['id'] for d in out):
+                continue
+            d = build(m, 'example', f'{vid}_{len(out) + 1}', len(out) + 1)
+            if d:
+                out.append(d)
+        return out
     if kind == 'majors':
         rows = sorted(lists['gainer'], key=lambda m: m.get('market_cap_rank') or 10 ** 6)
         for m in rows:

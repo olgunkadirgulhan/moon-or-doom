@@ -12,6 +12,9 @@ filters:                   # Bölüm 5: mikro coin / stablecoin koruması
                     rseth, ezeth, meth, lbtc, solvbtc, jitosol, msol, bnsol, wbnb, wtrx, btcb, bsc-usd, xaut, paxg]
   exclude_name_words: [wrapped, bridged, staked, restaked, liquid staking, pegged, tokenized, usd]
 
+sibling_channels:          # kendi diğer kripto kanalların: son 36 saatte işlediği coinler burada atlanır
+  - UCI_XVm_aXq3grR453_OdPJw # Whale Market Pulse (crypto-shorts-factory)
+
 repeat:
   hours: 48                # aynı coin 48 saat işlenmez...
   move_override_pct: 15    # ...son videodan beri %15'ten fazla oynamadıysa
@@ -28,6 +31,6 @@ freshness:
 
 # Kokoro ses kimlikleri (karakter başına sabit)
 voices:
-  charlie: {voice: am_michael, speed: 0.98, pitch: 0.97}
-  moon_max: {voice: am_puck, speed: 1.12, pitch: 1.10}
-  bear_betty: {voice: af_kore, speed: 0.96, pitch: 0.96}
+  charlie: {voice: am_michael, speed: 1.06, pitch: 0.97}
+  moon_max: {voice: am_puck, speed: 1.16, pitch: 1.10}
+  bear_betty: {voice: af_kore, speed: 1.03, pitch: 0.96}

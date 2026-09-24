@@ -66,12 +66,19 @@ def parse_json(text):
 
 # ------------------------------------------------------------------ doğrulama
 
+def board_list(spec, lesson_board):
+    """Formatın izin verdiği panolar; 'LESSON' = konunun ders panosu."""
+    if not spec['boards']:
+        return [lesson_board]
+    return [lesson_board if b == 'LESSON' else b for b in spec['boards']]
+
+
 def validate(sc, data, spec, segment=False, lesson_board=None):
     """-> sorun listesi (boşsa geçerli). Eksik alanlar güvenli varsayılana çekilir."""
     ph = words.placeholders(data)
     side = data['sidekick']
     allowed_chars = ('charlie', side)
-    boards = spec['boards'] or [lesson_board]
+    boards = board_list(spec, lesson_board)
     lines = sc.get('lines') or []
     problems = []
     lo, hi = spec['lines']
@@ -220,7 +227,7 @@ def build_prompt(data, spec, hook, punch, concept=None, segment=None):
         long_title=(segment or {}).get('long_title', ''), seg_label=(segment or {}).get('label', ''),
         move_ph='{CHANGE7D} this week' if 'CHANGE7D' in ph else '{CHANGE} today')
     structure = spec['structure'].format(**fields)
-    boards = spec['boards'] or [CONCEPTS[concept][0]]
+    boards = board_list(spec, CONCEPTS[concept][0] if concept else None)
     return COMMON.format(
         charlie_bio=CAST['charlie']['bio'], sidekick=side, sidekick_name=CAST[side]['name'],
         sidekick_bio=CAST[side]['bio'], name=data['coin']['name'], symbol=data['coin']['symbol'],
@@ -281,20 +288,27 @@ def make_script(data, hist, fmt, seed=None, concept=None):
     return sc
 
 
-def make_segment(data, key, label, long_title, seed=None):
-    """Uzun videonun tek coinlik bölümü."""
+def make_segment(data, key, label, long_title, seed=None, kind='weekly', concept=None):
+    """Uzun videonun tek coinlik bölümü. kind: weekly | majors | explained | school"""
     rnd = random.Random(seed)
     seg = {'label': label, 'long_title': long_title}
+    spec = {'explained': formats.EXPLAINED_SEGMENT, 'school': formats.SCHOOL_SEGMENT}.get(kind, LONG_SEGMENT)
+    lesson = CONCEPTS[concept][0] if concept else None
     sc = None
     if use_gemini():
         try:
-            sc = write_with_gemini(data, LONG_SEGMENT, 'reaction', 'reality_check', segment=seg)
+            sc = write_with_gemini(data, spec, 'reaction', 'reality_check', concept=concept, segment=seg)
         except Exception as e:
             log(f'Gemini failed: {str(e)[:200]}')
     source = 'gemini' if sc else 'template'
     if sc is None:
-        sc = formats.segment_template(data, rnd, label, long_title)
-        problems = validate(sc, data, LONG_SEGMENT, True)
+        if kind == 'explained':
+            sc = formats.explained_template(data, rnd, label)
+        elif kind == 'school':
+            sc = formats.school_segment_template(data, rnd, label, concept)
+        else:
+            sc = formats.segment_template(data, rnd, label, long_title)
+        problems = validate(sc, data, spec, True, lesson)
         if problems:
             raise RuntimeError(f'segment template invalid: {problems}')
     expand(sc['lines'], data, key)

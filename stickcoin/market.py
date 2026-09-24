@@ -91,6 +91,36 @@ def coin_info(coin_id):
     return {'categories': cats[:4], 'description': desc, 'launched': int(year) if year.isdigit() else None}
 
 
+def sibling_titles(hours=36):
+    """Kardeş kanalların (config: sibling_channels) son yüklemelerinin başlıkları, herkese açık RSS'ten.
+    Aynı coini aynı gün iki kanalda işlemeyelim (kitle bölünmesin)."""
+    import xml.etree.ElementTree as ET
+    from datetime import datetime, timedelta, timezone
+    since = datetime.now(timezone.utc) - timedelta(hours=hours)
+    ns = {'a': 'http://www.w3.org/2005/Atom'}
+    titles = []
+    for cid in CONFIG.get('sibling_channels') or []:
+        try:
+            r = requests.get(f'https://www.youtube.com/feeds/videos.xml?channel_id={cid}', headers=UA, timeout=20)
+            r.raise_for_status()
+            for e in ET.fromstring(r.content).findall('a:entry', ns):
+                pub = datetime.fromisoformat(e.find('a:published', ns).text)
+                if pub >= since:
+                    titles.append(e.find('a:title', ns).text or '')
+        except Exception as e:
+            log(f'sibling feed {cid} unavailable: {e}')
+    return titles
+
+
+def mentioned(m, titles):
+    sym, name = (m.get('symbol') or '').upper(), (m.get('name') or '')
+    for t in titles:
+        if re.search(rf'(?<![A-Za-z0-9$]){re.escape(sym)}(?![A-Za-z0-9])', t) or \
+                (len(name) > 3 and re.search(rf'\b{re.escape(name)}\b', t, re.I)):
+            return True
+    return False
+
+
 def price_now(coin_id):
     return float(cg('/simple/price', ids=coin_id, vs_currencies='usd')[coin_id]['usd'])
 

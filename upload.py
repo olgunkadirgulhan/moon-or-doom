@@ -6,7 +6,7 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
 # tam 'youtube' izni: yükleme + oynatma listesi + kanal ayarları (ileride kanal ayarları)
-SCOPES = ['https://www.googleapis.com/auth/youtube']
+SCOPES = ['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtube.force-ssl']
 
 
 class QuotaError(Exception):
@@ -63,6 +63,12 @@ def upload(mp4, title, description, tags, privacy, category='23'):
             raise QuotaError(str(e))
         raise
     return resp['id']
+
+
+def comment(video_id, text):
+    """Kanal adına üst düzey yorum (commentThreads.insert, 50 birim)."""
+    client().commentThreads().insert(part='snippet', body={'snippet': {
+        'videoId': video_id, 'topLevelComment': {'snippet': {'textOriginal': text}}}}).execute()
 
 
 def set_thumbnail(video_id, png):

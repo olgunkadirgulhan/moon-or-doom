@@ -16,8 +16,15 @@ CoinGecko + filtre + 48 saat kuralı → borsa mumları (Binance → OKX → KuC
 |---|---|---|
 | Shorts x2 | ~16:00 | günün en çok yükseleni + 5 dk sonra en çok düşeni |
 | Shorts x2 | ~23:00 | aynı (48 saat kuralıyla sıradaki coinler) |
-| Uzun video | Çarşamba ~18:30 | **Big Coins Check-up**: piyasa değeri ilk 5 coin, 16:9 |
-| Uzun video | Pazar ~18:30 | **Moon or Doom Weekly**: haftanın en çok yükselen 3 + düşen 3 coini, bölümlü |
+| Uzun video | Salı ~18:30 | **Moon or Doom Explained**: trend olan 3 proje ne işe yarıyor + grafikleri, 16:9 |
+| Uzun video | Cuma ~18:30 | **Chart School**: tek kavram (RSI, destek/direnç, hacim...) + 3 gerçek grafik örneği |
+
+Kardeş kanal **Whale Market Pulse** (crypto-shorts-factory) Pazar/Çarşamba haftalık özet yapar; Moon or Doom o konuyu
+ve günleri kullanmaz, ayrıca Whale'in son 36 saatte işlediği coinleri (herkese açık RSS) atlar. `weekly` ve `majors`
+uzun videoları kodda duruyor ama takvimde yok (elle: `--long weekly`).
+
+Her yüklemeden sonra kanal adına etkileşim sorusu soran bir yorum atılır (`youtube.force-ssl` izni gerekir; eski
+token'da yoksa atlanır, `python auth_setup.py --repo ...` ile yeniden bağlanınca açılır).
 
 ## Tekrarlayan içerik koruması (para kazanma)
 Her Shorts farklı formatta çıkar, son 2 videonun formatı tekrarlanmaz:

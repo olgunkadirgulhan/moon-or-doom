@@ -115,6 +115,11 @@ def metadata(data, sc, rnd):
         if top:
             titles.append(f"{sym} is {role} ({signed(chg)}) — the levels on the chart 📈")
         intro = f"{name} ({sym}) is {role} at {p(data['price'])}. Chart Charlie maps the support and resistance."
+    # karakter tepkili başlıklar (Dex & Friends'te en iyi çalışan stil: duygu + emoji)
+    if chg >= 0:
+        titles += [f"Moon Max lost it when {sym} went {signed(chg)} 😭", f"{sym} {signed(chg)} today and Moon Max is NOT okay 🚀"]
+    else:
+        titles += [f"Bear Betty saw {sym} {signed(chg)} and smiled 😈", f"{sym} {signed(chg)}… Bear Betty called it 💀"]
     desc = (intro + '\n\n' + '\n'.join(levels_block(data)) + '\n\n' + FOOTER +
             "Moon or Doom: today's top gainer & top loser, every day. Subscribe so you never miss the levels.\n"
             f"#crypto #{sym.lower()} #MoonOrDoom #shorts")
@@ -184,18 +189,42 @@ def make_short(kind, hist, args, stamp, exclude, avoid_formats=()):
 # ------------------------------------------------------------------ uzun video
 
 LONG = {
+    # Moon or Doom'un kendi uzun formatları (Salı / Cuma): kalıcı arama trafiği alan anlatımlar
+    'explained': dict(title='Moon or Doom Explained'),
+    'school': dict(title='Chart School'),
+    # Whale Market Pulse haftalık özet yapıyor -> bunlar sadece elle çalıştırılır (kitleyi bölmeyelim)
     'weekly': dict(title='Moon or Doom Weekly', labels={
         'week_gainer': ["this week's top gainer", 'the runner-up gainer', 'the third-best gainer'],
         'week_loser': ["this week's biggest loser", 'the second-biggest loser', 'the third-biggest loser']},
         board={'week_gainer': ['TOP GAINER #1', 'TOP GAINER #2', 'TOP GAINER #3'],
                'week_loser': ['TOP LOSER #1', 'TOP LOSER #2', 'TOP LOSER #3']}),
-    'majors': dict(title='Big Coins Check-up', labels=None, board=None),
+    'majors': dict(title='Big Coins Check-up'),
+}
+SCHOOL_LONG_TITLES = {
+    'rsi': ('What Is RSI? RSI Indicator Explained With Cartoons', ['RSI', 'EXPLAINED']),
+    'sr': ('Support and Resistance Explained With Cartoons', ['SUPPORT', '&', 'RESISTANCE']),
+    'volume': ('Trading Volume Explained With Cartoons', ['VOLUME', 'EXPLAINED']),
+    'trend': ('Moving Averages Explained With Cartoons', ['MOVING', 'AVERAGES']),
+    'candles': ('How to Read Candlestick Charts (Explained With Cartoons)', ['READ', 'CANDLES']),
 }
 
 
-def intro_outro(kind, first, last):
+def intro_outro(kind, first, last, concept=None):
     L = formats.Lines()
-    if kind == 'weekly':
+    if kind == 'explained':
+        L.say('charlie', 'Welcome to Moon or Doom Explained. Three trending projects, in plain English.', 'neutral', 'standing')
+        L.say('moon_max', 'I only understand rockets. Please go slow.', 'excited', 'celebrate', jump=True)
+        L.say('bear_betty', 'I will judge each one. Harshly.', 'smug', 'arms_crossed')
+        L.say('charlie', 'Deal. What each one is, then what its chart says.', 'smug', 'standing')
+    elif kind == 'school':
+        lesson = formats.CONCEPTS[concept][0]
+        L.say('charlie', 'Welcome to Chart School. Class is in session.', 'neutral', 'standing')
+        L.say('moon_max', 'I brought a pencil! And snacks!', 'excited', 'celebrate', jump=True)
+        for t in formats.LESSONS[concept]:
+            L.say('charlie', t, 'neutral', 'standing', 'board', board=lesson)
+        L.say('bear_betty', 'Fine. Show me it works on real charts.', 'suspicious', 'arms_crossed')
+        L.say('charlie', 'Three real examples. Let us go.', 'smug', 'standing')
+    elif kind == 'weekly':
         L.say('charlie', 'Welcome to Moon or Doom Weekly. The biggest movers of the week.', 'neutral', 'standing')
         L.say('moon_max', 'Three coins that flew. I brought sunglasses!', 'excited', 'celebrate', jump=True)
         L.say('bear_betty', 'And three that fell. I brought popcorn.', 'smug', 'arms_crossed')
@@ -208,47 +237,74 @@ def intro_outro(kind, first, last):
     O = formats.Lines()
     O.say('moon_max', 'That was the best episode ever. Again.', 'happy', 'hips')
     O.say('bear_betty', 'It had charts. I will allow it.', 'smug', 'arms_crossed')
-    O.say('charlie', 'See you next time. Levels, not promises. Not financial advice.', 'neutral', 'standing')
+    O.say('charlie', ('Class dismissed. ' if kind == 'school' else 'See you next time. ') +
+          'Levels, not promises. Not financial advice.', 'neutral', 'standing')
+    L, O = list(L.trim(99)), list(O.trim(99))
     for L_ in L:
         L_['coin'] = first
     for L_ in O:
         L_['coin'] = last
-    return list(L), list(O)
+    return L, O
+
+
+def seg_labels(kind, d, i, counters):
+    """-> (konuşmadaki etiket [yer tutucu olabilir], pano/bölüm başlığı)"""
+    if kind == 'explained':
+        if d.get('trending_rank'):
+            return 'number {RANK} on CoinGecko trending', f"TRENDING #{d['trending_rank']}"
+        return "one of today's biggest movers", "TODAY'S MOVER"
+    if kind == 'school':
+        if i == 0:
+            return 'the biggest coin by market cap', 'EXAMPLE #1'
+        return ('up {CHANGE} today' if d['change_24h_pct'] >= 0 else 'down {CHANGE} today'), f'EXAMPLE #{i + 1}'
+    if kind == 'weekly':
+        spec = LONG['weekly']
+        n = counters.get(d['reason_trending'], 0); counters[d['reason_trending']] = n + 1
+        return spec['labels'][d['reason_trending']][n], spec['board'][d['reason_trending']][n]
+    return 'ranked {MCAPRANK} by market cap', f"MARKET CAP #{d['coin'].get('market_cap_rank')}"
+
+
+def pick_long_concept(hist, rnd):
+    recent = [v.get('concept') for v in hist.get('videos', []) if v.get('kind') == 'school'][-3:]
+    return rnd.choice([c for c in formats.CONCEPTS if c not in recent] or list(formats.CONCEPTS))
 
 
 def produce_long(kind, hist, args, stamp):
     vid = f'long_{kind}_{stamp}'
     out = OUT / vid
     out.mkdir(parents=True, exist_ok=True)
-    datas = picker.pick_long(kind, vid)
+    datas = picker.pick_long(kind, vid, hist)
     if len(datas) < 3:
         raise RuntimeError(f'only {len(datas)} coins available for {kind}')
-    spec = LONG[kind]
-    coins, lines, sources = {}, [], []
-    counters = {}
+    rnd = random.Random(vid)
+    concept = (args.concept or pick_long_concept(hist, rnd)) if kind == 'school' else None
+    if concept:
+        log(f'concept: {concept}')
+    title_base = LONG[kind]['title']
+    coins, lines, sources, counters = {}, [], [], {}
     for i, d in enumerate(datas):
         key = f'c{i + 1}'
         coins[key] = d
-        if spec['labels']:
-            n = counters.get(d['reason_trending'], 0); counters[d['reason_trending']] = n + 1
-            label, board = spec['labels'][d['reason_trending']][n], spec['board'][d['reason_trending']][n]
-        else:
-            label, board = 'ranked {MCAPRANK} by market cap', f"MARKET CAP #{d['coin'].get('market_cap_rank')}"
-        seg, src = script.make_segment(d, key, label, spec['title'], seed=f'{vid}_{key}')
+        label, board = seg_labels(kind, d, i, counters)
+        seg, src = script.make_segment(d, key, label, title_base, seed=f'{vid}_{key}', kind=kind, concept=concept)
         sources.append(src)
         seg[0]['segment_start'] = True
-        chg = d.get('change_7d_pct') if d.get('change_7d_pct') is not None else d['change_24h_pct']
-        seg[0]['chapter'] = f"{d['coin']['name']} ({d['coin']['symbol']}) {signed(chg)} — {board.title()}"
+        chg = d.get('change_7d_pct') if kind in ('weekly', 'majors') and d.get('change_7d_pct') is not None \
+            else d['change_24h_pct']
+        name = f"{d['coin']['name']} ({d['coin']['symbol']})"
+        seg[0]['chapter'] = {'explained': f'What is {name}?', 'school': f'Example: {name}'}.get(
+            kind, f"{name} {signed(chg)} — {board.title()}")
         for L in seg:
             L['label'] = board
         lines += seg
         log(f"segment {key}: {d['coin']['symbol']} {board} ({src}, {len(seg)} lines)")
-    intro, outro = intro_outro(kind, 'c1', f'c{len(datas)}')
+    intro, outro = intro_outro(kind, 'c1', f'c{len(datas)}', concept)
     script.expand(intro, datas[0], 'c1')
     script.expand(outro, datas[-1], f'c{len(datas)}')
     for L in intro + outro:
-        L.setdefault('chart_action', 'none'); L['scene'] = 'stage'
-    intro[0]['chapter'] = 'Intro'
+        L.setdefault('chart_action', 'none')
+        L['label'] = 'CHART SCHOOL' if kind == 'school' else title_base.upper()
+    intro[0]['chapter'] = 'The lesson' if kind == 'school' else 'Intro'
     outro[0]['segment_start'] = True
     outro[0]['chapter'] = 'Wrap-up'
     lines = intro + lines + outro
@@ -259,29 +315,49 @@ def produce_long(kind, hist, args, stamp):
     mp4, dur, chapters = render.render(video, out, preview_png=out / 'preview.png')
     log(f'rendered {mp4} ({dur / 60:.1f} min, scripts: {sources})')
     today = datetime.now(timezone.utc)
-    if kind == 'weekly':
+    syms = [d['coin']['symbol'] for d in datas]
+    if kind == 'explained':
+        names = [d['coin']['name'] for d in datas]
+        title = f"What Are {names[0]}, {names[1]} and {names[2]}? Trending Crypto Explained (Cartoon)"
+        if len(title) > 100:
+            title = f"What Are {syms[0]}, {syms[1]} and {syms[2]}? Trending Crypto Projects Explained (Cartoon)"
+        thumb_title, thumb_sub = ['WHAT', 'ARE', 'THESE?'], ' · '.join(syms).split()
+        intro_txt = ('Three crypto projects trending right now, explained in plain English by Chart Charlie, Moon Max '
+                     'and Bear Betty: what each project does, what its token is for, and the support and resistance '
+                     'levels on its 4H chart.')
+        tags = ['what is crypto', 'crypto explained', 'crypto for beginners', 'trending crypto', 'altcoins explained',
+                'crypto projects', 'animation', 'cartoon'] + [f"what is {d['coin']['name']}" for d in datas] + \
+               [d['coin']['name'] for d in datas]
+    elif kind == 'school':
+        base, thumb_title = SCHOOL_LONG_TITLES[concept]
+        title = f"{base} | {', '.join(syms[:-1])} & {syms[-1]} Examples"
+        thumb_sub = 'CHART SCHOOL · 3 REAL EXAMPLES'.split()
+        intro_txt = (f"Chart School: {formats.CONCEPTS[concept][1].lower()}, explained with cartoons and applied to three "
+                     f"real charts ({', '.join(syms)}). Beginner friendly, no jargon.")
+        tags = [formats.CONCEPTS[concept][1].lower(), 'technical analysis for beginners', 'how to read crypto charts',
+                'trading basics', 'crypto for beginners', 'chart school', 'animation', 'cartoon'] + \
+               [d['coin']['name'] for d in datas]
+    elif kind == 'weekly':
         span = f"{(today - timedelta(days=7)).strftime('%b %d')} – {today.strftime('%b %d')}"
         title = f"Top Crypto Gainers & Losers This Week ({span}) | Moon or Doom Weekly"
         thumb_title, thumb_sub = ['WEEKLY', 'MOVERS'], 'TOP 3 GAINERS & TOP 3 LOSERS'.split()
-        intro_txt = ("The three biggest gainers and the three biggest losers of the week among large coins: what each "
-                     "project is, and the support and resistance levels on the 4H chart.")
+        intro_txt = 'The biggest gainers and losers of the week among large coins, with their 4H chart levels.'
+        tags = ['crypto weekly', 'top gainers', 'top losers'] + [d['coin']['name'] for d in datas]
     else:
-        syms = ', '.join(d['coin']['symbol'] for d in datas)
-        title = f"{syms}: Support & Resistance Levels ({today.strftime('%b %d')}) | Big Coins Check-up"
+        title = f"{', '.join(syms)}: Support & Resistance Levels ({today.strftime('%b %d')}) | Big Coins Check-up"
         thumb_title, thumb_sub = ['BIG', 'COINS', 'CHECK-UP'], 'KEY LEVELS FOR THE TOP 5'.split()
-        intro_txt = ('The five largest coins by market cap: what each one is, how it moved this week, and the support '
-                     'and resistance levels on the 4H chart.')
+        intro_txt = 'The five largest coins by market cap and the support and resistance levels on the 4H chart.'
+        tags = ['bitcoin', 'ethereum', 'crypto analysis'] + [d['coin']['name'] for d in datas]
+    tags += ['crypto', 'technical analysis', 'support and resistance', 'Moon or Doom']
     thumbs.make(out / 'thumb.png', thumb_title, thumb_sub, datas)
     chap = '\n'.join(f"{int(s // 60)}:{int(s % 60):02d} {c}" for s, c in [(0, chapters[0][1])] + chapters[1:])
     lv = '\n\n'.join(f"{d['coin']['name']} ({d['coin']['symbol']})\n" + '\n'.join(levels_block(d)) for d in datas)
     desc = (intro_txt + '\n\nChapters:\n' + chap + '\n\n' + lv + '\n\n' + FOOTER +
-            "Moon or Doom: daily top gainer & loser Shorts, plus two long episodes a week.\n#crypto #MoonOrDoom #altcoins")
-    tags = ['crypto', 'crypto weekly', 'top gainers', 'top losers', 'crypto analysis', 'technical analysis',
-            'support and resistance', 'altcoins', 'bitcoin', 'ethereum', 'crypto news', 'animation'] + \
-           [d['coin']['name'] for d in datas]
+            'Moon or Doom: daily top gainer & loser Shorts, plus Explained (Tuesday) and Chart School (Friday).\n'
+            '#crypto #MoonOrDoom #altcoins')
     (out / 'meta.json').write_text(json.dumps({'title': title, 'description': desc, 'tags': tags}, indent=2,
                                               ensure_ascii=False), encoding='utf-8')
-    return vid, datas, mp4, title, desc, tags, out / 'thumb.png'
+    return vid, datas, mp4, title, desc, tags, out / 'thumb.png', concept
 
 
 # ------------------------------------------------------------------ yükleme + kayıt
@@ -301,11 +377,30 @@ def to_playlist(upload, key, video_id):
             log(f'playlist add skipped: {str(e)[:160]}')
 
 
+ENGAGE = {
+    'levels': ['🚀 Moon or 💀 Doom for {SYM}? Drop one emoji 👇', 'Which level breaks first for {SYM}? 👇'],
+    'what_is': ['Had you heard of {NAME} before this? 👀', 'Which project should Charlie explain next? 👇'],
+    'school': ['What should Chart School cover next? RSI, volume, candles…? 👇', 'Did that make sense? Rate the lesson 1-10 👇'],
+    'skit': ['Are you Team Max 🚀 or Team Betty 💀? 👇', 'Who was right today, Max or Betty? 👇'],
+    'long': ['Which project should we explain next? 👇', 'What should Chart School cover next? 👇'],
+}
+
+
+def engage(upload, video_id, fmt, data):
+    """Etkileşim sorusu olan bir kanal yorumu (yorum sinyali algoritma için önemli). Başarısızsa sessizce geçer."""
+    try:
+        t = random.choice(ENGAGE.get(fmt, ENGAGE['levels'])).format(SYM=data['coin']['symbol'], NAME=data['coin']['name'])
+        upload.comment(video_id, t)
+        log(f'comment posted: {t}')
+    except Exception as e:
+        log(f'comment skipped: {str(e)[:160]}')
+
+
 def run_long(kind, args, mode, hist):
     import upload
     stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H%M')
     try:
-        vid, datas, mp4, title, desc, tags, thumb = produce_long(kind, hist, args, stamp)
+        vid, datas, mp4, title, desc, tags, thumb, concept = produce_long(kind, hist, args, stamp)
     except Exception as e:
         traceback.print_exc(); gh_annotation('error', f'long video failed: {e}'); raise SystemExit(1)
     log(f'title: {title}')
@@ -322,8 +417,9 @@ def run_long(kind, args, mode, hist):
     except Exception as e:
         log(f'thumbnail skipped (phone-verify the channel to enable): {str(e)[:160]}')
     record(hist, {'id': vid, 'kind': kind, 'coins': [d['coin']['id'] for d in datas], 'video_id': video_id,
-                  'privacy': mode, 'title': title, 'format': 'long'})
+                  'privacy': mode, 'title': title, 'format': 'long', 'concept': concept})
     to_playlist(upload, 'long', video_id)
+    engage(upload, video_id, 'long', datas[0])
     notify.message(f'✅ {title}\n{url} ({mode})')
 
 
@@ -335,7 +431,7 @@ def main():
     ap.add_argument('--concept', choices=list(CONCEPTS), help='school formatında konu')
     ap.add_argument('--coin', help='CoinGecko id (seçimi atla, tek video)')
     ap.add_argument('--data', help='hazır data.json ile render (tek video)')
-    ap.add_argument('--long', choices=list(LONG), help='uzun video: weekly | majors')
+    ap.add_argument('--long', choices=list(LONG), help='uzun video: explained | school (weekly | majors elle)')
     args = ap.parse_args()
     import upload
 
@@ -393,6 +489,7 @@ def main():
                       'format': sc['format'], 'concept': sc.get('concept'), 'hook': sc['hook'], 'punch': sc['punch'],
                       'script': sc['source'], 'video_id': video_id, 'privacy': mode, 'title': title})
         to_playlist(upload, kind, video_id)
+        engage(upload, video_id, sc['format'], data)
         notify.video(mp4, f'✅ {title}\n{url} ({mode})')
     if failed:
         raise SystemExit(1)

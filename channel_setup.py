@@ -27,7 +27,8 @@ DESCRIPTION = """Every day, the biggest crypto gainer and the biggest loser — 
 
 Every day: today's top gainer AND top loser as Shorts — sometimes a deep dive into what the project is, sometimes a
 Chart School lesson, sometimes pure chaos — always with levels calculated from real 4H chart data.
-Every Wednesday: the Big Coins Check-up. Every Sunday: Moon or Doom Weekly, the week's biggest movers.
+Every Tuesday: Moon or Doom Explained — trending crypto projects in plain English.
+Every Friday: Chart School — one trading concept, explained with cartoons and three real charts.
 
 ⚠️ Educational entertainment only. Not financial advice. Crypto is highly volatile — always do your own research. We never promote coins, exchanges or referral links.
 
@@ -42,8 +43,8 @@ PLAYLISTS = {
                                                'Chart Charlie checks the levels.'),
     'loser': ('📉 Top Losers — Going to Zero?', "Today's biggest crypto loser, every day. Bear Betty is smug, "
                                                'Chart Charlie finds the support.'),
-    'long': ('📺 Moon or Doom Weekly & Big Coins Check-up', 'Long episodes twice a week: Wednesday the biggest coins, '
-                                                          "Sunday the week's top gainers and losers."),
+    'long': ('📺 Explained & Chart School', 'Long episodes twice a week: Tuesday, trending crypto projects explained in '
+                                           'plain English; Friday, Chart School lessons with real charts.'),
 }
 
 
@@ -129,10 +130,11 @@ def main():
             if vid not in have:
                 step(f'video {vid} -> {key}', lambda: upload.add_to_playlist(ids[key], vid))
 
-    if not ids.get('_sections_done'):
+    if ids.get('_sections_done') != 2:  # 2: uzun video listesi de ana sayfada
         sections = yt.channelSections().list(part='snippet,contentDetails', mine=True).execute().get('items', [])
         seen = {(s['snippet']['type'].lower(), tuple(s.get('contentDetails', {}).get('playlists', []))) for s in sections}
-        wanted = [('recentUploads', ()), ('singlePlaylist', (ids['gainer'],)), ('singlePlaylist', (ids['loser'],))]
+        wanted = [('recentUploads', ()), ('singlePlaylist', (ids['long'],)), ('singlePlaylist', (ids['gainer'],)),
+                  ('singlePlaylist', (ids['loser'],))]
         for pos, (stype, pls) in enumerate(wanted):
             if (stype.lower(), pls) in seen:
                 continue
@@ -141,7 +143,7 @@ def main():
                 body['contentDetails'] = {'playlists': list(pls)}
             step(f'ana sayfa bölümü {stype} {pls}', lambda: yt.channelSections().insert(
                 part='snippet,contentDetails', body=body).execute())
-        ids['_sections_done'] = True
+        ids['_sections_done'] = 2
         PLAYLISTS_FILE.write_text(json.dumps(ids, indent=2) + '\n', encoding='utf-8')
     if videos:  # YouTube'daki gerçek durum (API projesi denetimsizse videolar gizliye kilitlenir)
         items = yt.videos().list(part='status', id=','.join(v['video_id'] for v in videos[-20:])).execute()['items']

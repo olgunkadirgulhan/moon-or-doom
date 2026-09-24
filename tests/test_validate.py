@@ -62,8 +62,17 @@ def main():
                 ok &= not problems
         seg = formats.segment_template(data, random.Random(3), "this week's top gainer", 'Weekly')
         problems = script.validate(seg, data, LONG_SEGMENT, True)
-        print(f"segment  {data['mood']:8} -> {'OK' if not problems else problems}")
+        print(f"segment  {data['mood']:8} weekly   -> {'OK' if not problems else problems}")
         ok &= not problems
+        seg = formats.explained_template(data, random.Random(3), 'number {RANK} on CoinGecko trending')
+        problems = script.validate(seg, data, formats.EXPLAINED_SEGMENT, True)
+        print(f"segment  {data['mood']:8} explained -> {'OK' if not problems else problems} ({len(seg['lines'])} lines)")
+        ok &= not problems
+        for c in CONCEPTS:
+            seg = formats.school_segment_template(data, random.Random(3), 'up {CHANGE} today', c)
+            problems = script.validate(seg, data, formats.SCHOOL_SEGMENT, True, CONCEPTS[c][0])
+            print(f"segment  {data['mood']:8} school/{c:8} -> {'OK' if not problems else problems}")
+            ok &= not problems
     for name, fn in BAD.items():
         problems = script.validate(mutate(fn), BULL, SHORT_FORMATS['levels'])
         print(f'{name:20} -> {"rejected" if problems else "NOT REJECTED"}  {problems[:1]}')
