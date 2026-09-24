@@ -59,6 +59,13 @@ def price_say(p):
     return 'zero point ' + digits_words(s) + ' dollars'
 
 
+def year_say(y):
+    y = int(y)
+    if 2000 <= y < 2010:
+        return 'two thousand' + (' ' + ONES[y - 2000] if y > 2000 else '')
+    return int_words(y // 100) + ' ' + (int_words(y % 100) if y % 100 >= 10 else 'oh ' + ONES[y % 100])
+
+
 def pct_text(x):
     return f'{abs(x):.1f}%'
 
@@ -87,4 +94,9 @@ def placeholders(data):
         ph['VOLX'] = (f"{data['volume_vs_avg']:.1f}x", dec_words(data['volume_vs_avg'], 1) + ' times')
     if data.get('trending_rank'):
         ph['RANK'] = (f"#{data['trending_rank']}", 'number ' + int_words(data['trending_rank']))
+    if c.get('market_cap_rank'):
+        ph['MCAPRANK'] = (f"#{c['market_cap_rank']}", 'number ' + int_words(c['market_cap_rank']))
+    launched = (data.get('info') or {}).get('launched')
+    if launched:
+        ph['LAUNCHED'] = (str(launched), year_say(launched))
     return ph

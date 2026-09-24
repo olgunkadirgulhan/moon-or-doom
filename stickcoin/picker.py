@@ -26,7 +26,7 @@ def blocked(coin_id, price, hist):
     """48 saat kuralı: son videodan beri %15'ten fazla hareket yoksa tekrar işlenmez."""
     rep = CONFIG['repeat']
     for v in reversed(hist.get('videos', [])):
-        if v['coin'] != coin_id:
+        if v.get('coin') != coin_id:
             continue
         if now() - parse(v['date']) > timedelta(hours=rep['hours']):
             return False
@@ -52,7 +52,7 @@ def movers():
     return _movers
 
 
-def build(m, reason, vid, mover_rank=None, trending_rank=None):
+def build(m, reason, vid, mover_rank=None, trending_rank=None, info=True):
     source, a = market.klines(m['symbol'], m['current_price'])
     if a is None:
         log(f"{m['symbol'].upper()}: no USDT pair on a major exchange, skipped")
@@ -78,9 +78,13 @@ def build(m, reason, vid, mover_rank=None, trending_rank=None):
         **lv, **ex,
         'mood': 'bullish' if chg >= 0 else 'bearish',
         'sidekick': 'moon_max' if chg >= 0 else 'bear_betty',
-        'chart': {'interval': '4h', 'source': source, 'candles': a[-show:, :5].round(10).tolist()},
+        'chart': {'interval': '4h', 'source': source, 'candles': a[-show:, :6].round(10).tolist()},
+        'info': market.coin_info(m['id']) if info else {},
         'created_utc': now().strftime('%Y-%m-%d %H:%M'),
     }
+    c7 = m.get('price_change_percentage_7d_in_currency')
+    if c7 is not None:
+        data['change_7d_pct'] = round(float(c7), 1)
     for k in ('price', 'resistance_1', 'resistance_2', 'support_1', 'support_2', 'ema_50', 'ema_200'):
         if data[k] is not None and not np.isfinite(data[k]):
             data[k] = None
@@ -98,6 +102,37 @@ def pick(kind, hist, vid, exclude=()):
             log(f"{kind}: {data['coin']['symbol']} (#{rank}, {data['change_24h_pct']:+.1f}%, via {data['chart']['source']})")
             return data
     raise RuntimeError(f'no eligible {kind} found')
+
+
+def pick_long(kind, vid):
+    """Uzun videolar: 'weekly' = haftanın en çok yükselen 3 + düşen 3 (7g), 'majors' = piyasa değeri ilk 5."""
+    lists, _ = movers()
+    out = []
+    if kind == 'majors':
+        rows = sorted(lists['gainer'], key=lambda m: m.get('market_cap_rank') or 10 ** 6)
+        for m in rows:
+            if len(out) == 5:
+                break
+            d = build(m, 'major', f'{vid}_{len(out) + 1}', len(out) + 1)
+            if d:
+                out.append(d)
+        return out
+    rows = [m for m in lists['gainer'] if m.get('price_change_percentage_7d_in_currency') is not None]
+    by7 = sorted(rows, key=lambda m: m['price_change_percentage_7d_in_currency'])
+    for side, seq in (('gainer', list(reversed(by7))), ('loser', by7)):
+        got = 0
+        for m in seq[:30]:
+            if got == 3:
+                break
+            if any(d['coin']['id'] == m['id'] for d in out):
+                continue
+            d = build(m, f'week_{side}', f'{vid}_{len(out) + 1}', got + 1)
+            if d:
+                chg7 = d.get('change_7d_pct') or 0
+                d['mood'] = 'bullish' if chg7 >= 0 else 'bearish'
+                d['sidekick'] = 'moon_max' if chg7 >= 0 else 'bear_betty'
+                out.append(d); got += 1
+    return out
 
 
 def load_hist(path):

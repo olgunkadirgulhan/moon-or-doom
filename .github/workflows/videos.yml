@@ -1,21 +1,33 @@
 name: videos
 on:
   schedule:
-    # TR 10:00 / 17:00 / 23:00 civarı: her çalıştırma en çok yükselen + en çok düşen, arada 5 dk.
-    # Cron ~25 dk önce başlar (GitHub gecikmesi + render).
-    - cron: "35 6 * * *"
-    - cron: "35 13 * * *"
+    # Shorts: günde 2 çalıştırma x (en çok yükselen + en çok düşen, 5 dk arayla) = 4 video.
+    # TR ~16:00 ve ~23:00 (ABD sabah / öğleden sonra). Cron ~25 dk önce başlar (GitHub gecikmesi + render).
+    - cron: "35 12 * * *"
     - cron: "35 19 * * *"
+    # Uzun video (16:9): Çarşamba 'majors' (piyasa değeri ilk 5), Pazar 'weekly' (haftanın 3+3 hareketlisi), TR ~18:30
+    - cron: "0 15 * * 3"
+    - cron: "0 15 * * 0"
   workflow_dispatch:
     inputs:
+      mode:
+        description: shorts | weekly | majors
+        type: choice
+        options: [shorts, weekly, majors]
+        default: shorts
       no_upload:
         description: Render only, do not upload
         type: boolean
         default: false
       coin:
-        description: Force a CoinGecko id (e.g. solana). Empty = automatic pick
+        description: (shorts) Force a CoinGecko id, e.g. solana. Empty = automatic pick
         type: string
         default: ""
+      format:
+        description: (shorts) Force a format
+        type: choice
+        options: [auto, levels, what_is, school, skit]
+        default: auto
 
 permissions:
   contents: write
@@ -27,7 +39,7 @@ concurrency:
 jobs:
   make:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       PYTHONUTF8: "1"
     steps:
@@ -44,6 +56,13 @@ jobs:
           key: kokoro-v1.0
       - name: Validator self-test
         run: python tests/test_validate.py
+      - name: Pick mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "m=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 15 * * 3" ]; then echo "m=majors" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 15 * * 0" ]; then echo "m=weekly" >> $GITHUB_OUTPUT
+          else echo "m=shorts" >> $GITHUB_OUTPUT; fi
       - name: Run pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -56,12 +75,18 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           YT_PRIVACY: ${{ vars.YT_PRIVACY }}
           SCRIPT_SOURCE: ${{ vars.SCRIPT_SOURCE }}
+          MODE: ${{ steps.mode.outputs.m }}
           NO_UPLOAD: ${{ inputs.no_upload }}
           COIN: ${{ inputs.coin }}
+          FORMAT: ${{ inputs.format }}
         run: |
           ARGS=()
           [ "$NO_UPLOAD" = "true" ] && ARGS+=(--no-upload)
-          [ -n "$COIN" ] && ARGS+=(--coin "$COIN")
+          if [ "$MODE" != "shorts" ]; then ARGS+=(--long "$MODE")
+          else
+            [ -n "$COIN" ] && ARGS+=(--coin "$COIN")
+            [ -n "$FORMAT" ] && [ "$FORMAT" != "auto" ] && ARGS+=(--format "$FORMAT")
+          fi
           python run.py "${ARGS[@]}"
       - name: Keep video for review
         if: always()

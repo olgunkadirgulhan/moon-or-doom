@@ -92,7 +92,7 @@ def banner():
     character(ctx, 'bear_betty', 1880, ground, s, -1, 'smug', 'arms_crossed', 'closed')
     paste_text(ctx, ['MOON', 'OR', 'DOOM'], 150, W / 2, 640, 1500, color=(255, 222, 40))
     paste_text(ctx, "TODAY'S TOP GAINER & LOSER".split(), 50, W / 2, 790, 1000)
-    paste_text(ctx, 'EXPLAINED IN 60 SECONDS · 3X DAILY'.split(), 38, W / 2, 855, 1000, color=(200, 215, 240))
+    paste_text(ctx, 'DAILY SHORTS · WEEKLY EPISODES'.split(), 38, W / 2, 855, 1000, color=(200, 215, 240))
     surf.write_to_png(str(OUT / 'banner.png'))
 
 

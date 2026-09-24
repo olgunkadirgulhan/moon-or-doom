@@ -25,7 +25,9 @@ DESCRIPTION = """Every day, the biggest crypto gainer and the biggest loser — 
 📉 Bear Betty is sure everything is going to zero.
 📊 Chart Charlie shows the actual chart: key support and resistance levels, RSI and what to watch next.
 
-New Shorts 3 times a day: today's top gainer AND top loser, with levels calculated from real 4H chart data.
+Every day: today's top gainer AND top loser as Shorts — sometimes a deep dive into what the project is, sometimes a
+Chart School lesson, sometimes pure chaos — always with levels calculated from real 4H chart data.
+Every Wednesday: the Big Coins Check-up. Every Sunday: Moon or Doom Weekly, the week's biggest movers.
 
 ⚠️ Educational entertainment only. Not financial advice. Crypto is highly volatile — always do your own research. We never promote coins, exchanges or referral links.
 
@@ -36,10 +38,12 @@ KEYWORDS = ('"Moon or Doom" crypto cryptocurrency bitcoin altcoins "crypto news"
             '"price analysis" "animated crypto" "stick figure"')
 
 PLAYLISTS = {
-    'gainer': ('📈 Top Gainers — To the Moon?', "Today's biggest crypto gainer, 3x a day. Moon Max is hyped, "
+    'gainer': ('📈 Top Gainers — To the Moon?', "Today's biggest crypto gainer, every day. Moon Max is hyped, "
                                                'Chart Charlie checks the levels.'),
-    'loser': ('📉 Top Losers — Going to Zero?', "Today's biggest crypto loser, 3x a day. Bear Betty is smug, "
+    'loser': ('📉 Top Losers — Going to Zero?', "Today's biggest crypto loser, every day. Bear Betty is smug, "
                                                'Chart Charlie finds the support.'),
+    'long': ('📺 Moon or Doom Weekly & Big Coins Check-up', 'Long episodes twice a week: Wednesday the biggest coins, '
+                                                          "Sunday the week's top gainers and losers."),
 }
 
 
@@ -91,6 +95,9 @@ def main():
     ids = json.loads(PLAYLISTS_FILE.read_text(encoding='utf-8')) if PLAYLISTS_FILE.exists() else {}
     for key, (ptitle, pdesc) in PLAYLISTS.items():
         if key in ids:
+            step(f'oynatma listesi güncel: {ptitle}', lambda: yt.playlists().update(part='snippet', body={
+                'id': ids[key], 'snippet': {'title': ptitle, 'description': pdesc + '\n\nNot financial advice. #MoonOrDoom',
+                                            'defaultLanguage': 'en'}}).execute())
             continue
         if ptitle in existing:
             ids[key] = existing[ptitle]; continue
@@ -113,7 +120,7 @@ def main():
                 step(f"video {v['video_id']} ({v['symbol']}) -> public", make_public)
         HIST.write_text(json.dumps(hist, indent=2, ensure_ascii=False), encoding='utf-8')
     for key in PLAYLISTS:
-        want = [v['video_id'] for v in videos if v.get('kind') == key]
+        want = [v['video_id'] for v in videos if v.get('kind') == key or key == 'long' and v.get('format') == 'long']
         if not want:
             continue
         have = {i['contentDetails']['videoId'] for i in yt.playlistItems().list(

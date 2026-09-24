@@ -97,7 +97,7 @@ class Chart:
         n = len(self.c)
         cw = (self.px1 - self.px0) / n
         shown = p * n
-        for i, (_, o, h, l, c) in enumerate(self.c):
+        for i, (o, h, l, c) in enumerate(k[1:5] for k in self.c):
             if i >= shown:
                 break
             k = min(1.0, shown - i)
@@ -127,7 +127,20 @@ class Chart:
         label(ctx, words.price_text(self.d['price']), self.px1 + 12, y, (0.06, 0.09, 0.18), (1, 1, 1), 28,
               alpha=alpha)
 
-    def level(self, ctx, price, p, color, tag, pulse=0.0, faint=False):
+    def label_ys(self):
+        """Etiketler üst üste binmesin: yakın seviyelerin etiketi dikeyde itilir (çizgi yerinde kalır)."""
+        d, gap = self.d, 46
+        ys = {k: self.y(d[k]) for k in ('resistance_1', 'resistance_2', 'support_1', 'support_2') if d.get(k)}
+        if 'resistance_1' in ys and 'support_1' in ys and ys['support_1'] - ys['resistance_1'] < gap:
+            mid = (ys['support_1'] + ys['resistance_1']) / 2
+            ys['resistance_1'], ys['support_1'] = mid - gap / 2, mid + gap / 2
+        if 'resistance_2' in ys and ys['resistance_1'] - ys['resistance_2'] < gap:
+            ys['resistance_2'] = ys['resistance_1'] - gap
+        if 'support_2' in ys and ys['support_2'] - ys['support_1'] < gap:
+            ys['support_2'] = ys['support_1'] + gap
+        return ys
+
+    def level(self, ctx, price, p, color, tag, pulse=0.0, faint=False, label_y=None):
         if p <= 0 or price is None:
             return
         y = self.y(price)
@@ -141,7 +154,7 @@ class Chart:
         if p > 0.75:
             a = min(1, (p - 0.75) / 0.25)
             text = f'{tag} {words.price_text(price)}'
-            label(ctx, text, self.px1 + 12, y, (1, 1, 1), color, 34 if len(text) <= 10 else max(22, 34 - 3 * (len(text) - 10)),
+            label(ctx, text, self.px1 + 12, y if label_y is None else label_y, (1, 1, 1), color, 34 if len(text) <= 10 else max(22, 34 - 3 * (len(text) - 10)),
                   scale=(0.6 + 0.4 * ease(a)) * (1 + 0.08 * pulse))
 
     def arrow(self, ctx, target, p, color):
@@ -181,11 +194,15 @@ class Chart:
         pulse = math.sin(t * 9) * 0.5 + 0.5
         active = st.get('active')
         d = self.d
+        ly = self.label_ys()
         self.level(ctx, d['resistance_1'], prog('draw_resistance', 0.8), DOWN, 'R',
-                   pulse if active == 'draw_resistance' else 0)
-        self.level(ctx, d['support_1'], prog('draw_support', 0.8), UP, 'S', pulse if active == 'draw_support' else 0)
+                   pulse if active == 'draw_resistance' else 0, label_y=ly.get('resistance_1'))
+        self.level(ctx, d['support_1'], prog('draw_support', 0.8), UP, 'S', pulse if active == 'draw_support' else 0,
+                   label_y=ly.get('support_1'))
         up, down = prog('highlight_scenario_up', 0.9), prog('highlight_scenario_down', 0.9)
-        self.level(ctx, d.get('resistance_2'), up, UP, '→', pulse if active == 'highlight_scenario_up' else 0, True)
+        self.level(ctx, d.get('resistance_2'), up, UP, '→', pulse if active == 'highlight_scenario_up' else 0, True,
+                   label_y=ly.get('resistance_2'))
         self.arrow(ctx, d.get('resistance_2'), up, UP)
-        self.level(ctx, d.get('support_2'), down, DOWN, '→', pulse if active == 'highlight_scenario_down' else 0, True)
+        self.level(ctx, d.get('support_2'), down, DOWN, '→', pulse if active == 'highlight_scenario_down' else 0, True,
+                   label_y=ly.get('support_2'))
         self.arrow(ctx, d.get('support_2'), down, DOWN)

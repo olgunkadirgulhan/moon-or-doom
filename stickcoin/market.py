@@ -47,7 +47,7 @@ def markets(ids=None, pages=1):
     rows = []
     for page in range(1, pages + 1):
         params = dict(vs_currency='usd', order='market_cap_desc', per_page=250, page=page,
-                      price_change_percentage='24h')
+                      price_change_percentage='24h,7d')
         if ids:
             params['ids'] = ','.join(ids)
         rows += cg('/coins/markets', **params)
@@ -69,6 +69,26 @@ def eligible(m):
     if 0.97 <= price <= 1.03 and abs(chg) < 1.5:  # isimden kaçan stablecoin
         return False
     return True
+
+
+def coin_info(coin_id):
+    """Proje bilgisi (CoinGecko): kategoriler, kısa açıklama, çıkış yılı. 'What is it?' formatı ve panolar için."""
+    try:
+        d = cg(f'/coins/{coin_id}', localization='false', tickers='false', market_data='false',
+               community_data='false', developer_data='false', sparkline='false')
+    except Exception as e:
+        log(f'coin info unavailable for {coin_id}: {e}')
+        return {}
+    desc = re.sub(r'<[^>]+>', '', (d.get('description') or {}).get('en') or '')
+    desc = re.sub(r'\s+', ' ', desc).strip()
+    if len(desc) > 900:
+        cut = desc[:900]
+        desc = cut[:cut.rfind('.') + 1] or cut
+    skip = re.compile(r'portfolio|ecosystem|binance|coinbase|bybit|okx|kucoin|kraken|launchpad|launchpool|spotlight|'
+                      r'alpha|listing|holdings|made in|index', re.I)
+    cats = [c for c in (d.get('categories') or []) if c and not skip.search(c)]
+    year = (d.get('genesis_date') or '')[:4]
+    return {'categories': cats[:4], 'description': desc, 'launched': int(year) if year.isdigit() else None}
 
 
 def price_now(coin_id):

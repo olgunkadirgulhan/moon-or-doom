@@ -1,40 +1,52 @@
-# StickCoin: otomatik çöp adam kripto yorum kanalı
+# Moon or Doom: otomatik çöp adam kripto kanalı
 
-Tasarım dokümanı: `cizgi-kripto-yorum-kanali.md`. Her şey GitHub Actions üzerinde çalışır (`.github/workflows/videos.yml`).
-Karakter rig'i, Kokoro sesleri, SFX/müzik ve YouTube yükleme `çizgiKarakter` (StickStory) projesinden uyarlandı.
+Kanal: **Moon or Doom** (YouTube). Tasarım dokümanı: `cizgi-kripto-yorum-kanali.md`. Her şey GitHub Actions üzerinde
+çalışır (`.github/workflows/videos.yml`). Karakter rig'i, Kokoro sesleri, SFX/müzik ve YouTube yükleme `çizgiKarakter`
+(StickStory) projesinden uyarlandı.
 
 ```
-CoinGecko trend + filtre + 48 saat kuralı → borsa mumları (Binance → OKX → KuCoin → Bybit)
-→ destek/direnç + RSI + EMA + hacim (kod hesaplar) → senaryo (Gemini, yer tutucularla) → doğrulama
-→ Kokoro TTS (karakter başına ses) → cairo: mum grafiği + çizgi animasyonu + çöp adamlar + altyazı
-→ ffmpeg → fiyat tazelik kontrolü (%3) → YouTube Shorts → Telegram bildirimi
+CoinGecko + filtre + 48 saat kuralı → borsa mumları (Binance → OKX → KuCoin → Bybit) + proje bilgisi
+→ destek/direnç + RSI + EMA + hacim (kod hesaplar) → senaryo (Gemini, formatın yapısı + yer tutucular) → doğrulama
+→ Kokoro TTS → cairo: sahne / grafik / pano + çöp adamlar + altyazı + beğen-abone kartı
+→ ffmpeg → fiyat tazelik kontrolü (%3) → YouTube → oynatma listesi
 ```
 
-Takvim: TR ~10:00 / 17:00 / 23:00, her çalıştırmada 2 video: günün en çok yükseleni (Moon Max) ve en çok düşeni
-(Bear Betty), arada 5 dk. Günde 6 video. Aynı coin 48 saat içinde tekrar gelmez (%15+ hareket hariç), sıradaki alınır.
-Her videonun sonunda beğen / abone ol / zil kapanış kartı var.
+## Takvim
+| Ne | Ne zaman (TR) | İçerik |
+|---|---|---|
+| Shorts x2 | ~16:00 | günün en çok yükseleni + 5 dk sonra en çok düşeni |
+| Shorts x2 | ~23:00 | aynı (48 saat kuralıyla sıradaki coinler) |
+| Uzun video | Çarşamba ~18:30 | **Big Coins Check-up**: piyasa değeri ilk 5 coin, 16:9 |
+| Uzun video | Pazar ~18:30 | **Moon or Doom Weekly**: haftanın en çok yükselen 3 + düşen 3 coini, bölümlü |
 
-YouTube kotası: Google Cloud projesi başına günlük 10.000 birim, her yükleme 1.600 birim → 6 video = 9.600 birim.
-Bu yüzden bu kanal için **ayrı bir Google Cloud projesi** kullan (StickStory ile aynı projeyi paylaşırsa kota yetmez).
+## Tekrarlayan içerik koruması (para kazanma)
+Her Shorts farklı formatta çıkar, son 2 videonun formatı tekrarlanmaz:
+- **levels**: destek/direnç haritası + istatistik kartı
+- **what_is**: projenin ne olduğu (CoinGecko açıklaması + kategoriler), sonra seviyeler
+- **school**: Chart School, günün coiniyle tek kavram (RSI, destek/direnç, hacim, ortalamalar, mumlar)
+- **skit**: tam ekran komedi sahnesi, grafik ortada "gerçeklik kontrolü" olarak
 
-## Sayı güvenliği (Bölüm 1)
-LLM hiçbir sayı yazamaz. Senaryoda `{R1}`, `{S1}`, `{CHANGE}` gibi yer tutucular kullanır ve kod bunları doğrulanmış
-veriyle doldurur. Metinde rakam, sayı kelimesi ("twenty", "percent"), buy/sell, vaat ya da borsa adı geçerse senaryo
-reddedilir. Gemini 3 denemede geçemezse kural tabanlı şablon kullanılır. Test: `python tests/test_validate.py`
+Sahneler: `stage` (tam ekran karakterler, kamera yakınlaşması), `chart` (mum grafiği), `board` (bilgi/ders panosu).
 
-## Kurulum (bir kez)
-1. Repo secrets: `GEMINI_API_KEY` (diğer kanallarındaki anahtar olabilir)
-2. YouTube kanalını bağla (tarayıcıda kripto kanalını seç):
-   `python auth_setup.py --repo <kullanıcı>/<repo>` → `YT_CLIENT_ID/SECRET/REFRESH_TOKEN/CHANNEL_ID` secrets'a yazılır
-3. Repo variable: `YT_PRIVACY=private` ile başla, ilk 3 gün videoları kontrol et, sonra `public` yap
-4. İsteğe bağlı: `COINGECKO_API_KEY` (ücretsiz demo key), `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` (her videoyu ve hatayı telefona yollar)
+## Sayı güvenliği
+LLM hiçbir sayı yazamaz; `{R1}`, `{S1}`, `{CHANGE}` gibi yer tutucular kullanır, kod doğrulanmış veriyle doldurur.
+Rakam, sayı kelimesi, buy/sell, "too late" gibi FOMO ifadeleri, vaat ya da borsa adı geçerse senaryo reddedilir.
+Gemini 3 denemede geçemezse kural tabanlı şablon kullanılır. Test: `python tests/test_validate.py`
 
-Ayarlar `config.yaml` içinde: günlük video sayısı, filtreler, tekrar kuralı, sesler.
+## Kota
+Google Cloud projesi `moonorrdoom` (yalnız bu kanal): günlük 10.000 birim, yükleme başı 1.600 → günde 4 Shorts +
+uzun video günü 1 = en fazla 8.000 birim.
+
+## Kurulum (yapıldı)
+- Secrets: `GEMINI_API_KEY`, `YT_CLIENT_ID/SECRET/REFRESH_TOKEN/CHANNEL_ID` (`python auth_setup.py --repo ...`)
+- Variable: `YT_PRIVACY=public`
+- Kanal: `channel` workflow'u → banner, açıklama, filigran, oynatma listeleri, ana sayfa bölümleri
+- Elle: profil resmi (`branding/profile.png`) ve handle, YouTube Studio'dan
 
 ## Yerel test
 ```
 pip install -r requirements.txt
-python run.py --no-upload                  # yükselen + düşen, output/<id>/video.mp4
-python run.py --no-upload --only loser     # sadece düşen (Bear Betty)
-python run.py --no-upload --coin solana    # belirli coin
+python run.py --no-upload                              # yükselen + düşen, otomatik format
+python run.py --no-upload --only loser --format school
+python run.py --no-upload --long weekly                # 16:9 uzun video
 ```
