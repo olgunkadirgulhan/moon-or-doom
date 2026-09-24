@@ -136,6 +136,12 @@ def main():
                 part='snippet,contentDetails', body=body).execute())
         ids['_sections_done'] = True
         PLAYLISTS_FILE.write_text(json.dumps(ids, indent=2) + '\n', encoding='utf-8')
+    if videos:  # YouTube'daki gerçek durum (API projesi denetimsizse videolar gizliye kilitlenir)
+        items = yt.videos().list(part='status', id=','.join(v['video_id'] for v in videos[-20:])).execute()['items']
+        for it in items:
+            s = it['status']
+            print(f"durum {it['id']}: privacy={s.get('privacyStatus')} upload={s.get('uploadStatus')} "
+                  f"rejection={s.get('rejectionReason', '-')} failure={s.get('failureReason', '-')}")
     print('\nElle yapılacak: branding/profile.png -> YouTube Studio > Customization > Branding > Picture')
 
 
