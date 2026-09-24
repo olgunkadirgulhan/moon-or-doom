@@ -101,7 +101,17 @@ def main():
         ids[key] = p['id']; print(f'✓ oynatma listesi: {ptitle}')
     PLAYLISTS_FILE.write_text(json.dumps(ids, indent=2) + '\n', encoding='utf-8')
 
-    videos = json.loads(HIST.read_text(encoding='utf-8')).get('videos', []) if HIST.exists() else []
+    hist = json.loads(HIST.read_text(encoding='utf-8')) if HIST.exists() else {'videos': []}
+    videos = hist.get('videos', [])
+    if (os.environ.get('YT_PRIVACY') or '').lower() == 'public':  # gizli yüklenmiş eski videoları aç
+        for v in videos:
+            if v.get('privacy') != 'public':
+                def make_public(v=v):
+                    yt.videos().update(part='status', body={'id': v['video_id'], 'status': {
+                        'privacyStatus': 'public', 'selfDeclaredMadeForKids': False}}).execute()
+                    v['privacy'] = 'public'
+                step(f"video {v['video_id']} ({v['symbol']}) -> public", make_public)
+        HIST.write_text(json.dumps(hist, indent=2, ensure_ascii=False), encoding='utf-8')
     for key in PLAYLISTS:
         want = [v['video_id'] for v in videos if v.get('kind') == key]
         if not want:
