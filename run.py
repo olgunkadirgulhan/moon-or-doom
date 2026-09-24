@@ -212,7 +212,7 @@ SCHOOL_LONG_TITLES = {
 def intro_outro(kind, first, last, concept=None):
     L = formats.Lines()
     if kind == 'explained':
-        L.say('charlie', 'Welcome to Moon or Doom Explained. Three trending projects, in plain English.', 'neutral', 'standing')
+        L.say('charlie', 'Welcome to Moon or Doom Explained. Five trending projects, in plain English.', 'neutral', 'standing')
         L.say('moon_max', 'I only understand rockets. Please go slow.', 'excited', 'celebrate', jump=True)
         L.say('bear_betty', 'I will judge each one. Harshly.', 'smug', 'arms_crossed')
         L.say('charlie', 'Deal. What each one is, then what its chart says.', 'smug', 'standing')
@@ -220,10 +220,12 @@ def intro_outro(kind, first, last, concept=None):
         lesson = formats.CONCEPTS[concept][0]
         L.say('charlie', 'Welcome to Chart School. Class is in session.', 'neutral', 'standing')
         L.say('moon_max', 'I brought a pencil! And snacks!', 'excited', 'celebrate', jump=True)
-        for t in formats.LESSONS[concept]:
+        for j, t in enumerate(formats.LESSONS_LONG[concept]):
             L.say('charlie', t, 'neutral', 'standing', 'board', board=lesson)
+            if j == 2:
+                L.say('moon_max', 'Okay, I am taking notes. Mentally. Mostly.', 'confused', 'thinking')
         L.say('bear_betty', 'Fine. Show me it works on real charts.', 'suspicious', 'arms_crossed')
-        L.say('charlie', 'Three real examples. Let us go.', 'smug', 'standing')
+        L.say('charlie', 'Four real examples. Let us go.', 'smug', 'standing')
     elif kind == 'weekly':
         L.say('charlie', 'Welcome to Moon or Doom Weekly. The biggest movers of the week.', 'neutral', 'standing')
         L.say('moon_max', 'Three coins that flew. I brought sunglasses!', 'excited', 'celebrate', jump=True)
@@ -318,11 +320,12 @@ def produce_long(kind, hist, args, stamp):
     syms = [d['coin']['symbol'] for d in datas]
     if kind == 'explained':
         names = [d['coin']['name'] for d in datas]
-        title = f"What Are {names[0]}, {names[1]} and {names[2]}? Trending Crypto Explained (Cartoon)"
+        n = len(datas)
+        title = f"What Are {', '.join(names[:-1])} and {names[-1]}? {n} Trending Crypto Projects Explained"
         if len(title) > 100:
-            title = f"What Are {syms[0]}, {syms[1]} and {syms[2]}? Trending Crypto Projects Explained (Cartoon)"
+            title = f"What Are {', '.join(syms[:-1])} and {syms[-1]}? {n} Trending Crypto Projects Explained (Cartoon)"
         thumb_title, thumb_sub = ['WHAT', 'ARE', 'THESE?'], ' · '.join(syms).split()
-        intro_txt = ('Three crypto projects trending right now, explained in plain English by Chart Charlie, Moon Max '
+        intro_txt = (f'{n} crypto projects trending right now, explained in plain English by Chart Charlie, Moon Max '
                      'and Bear Betty: what each project does, what its token is for, and the support and resistance '
                      'levels on its 4H chart.')
         tags = ['what is crypto', 'crypto explained', 'crypto for beginners', 'trending crypto', 'altcoins explained',

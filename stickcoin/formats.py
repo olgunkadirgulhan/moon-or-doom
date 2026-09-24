@@ -98,31 +98,36 @@ Do NOT add the disclaimer line in a segment.
 """)
 
 EXPLAINED_SEGMENT = dict(
-    lines=(8, 12), boards=['title', 'about', 'stats'], min_stage=2, min_board=4, scenarios=False,
-    structure="""This is ONE SEGMENT of "{long_title}", an evergreen explainer; the segment explains {name}.
+    lines=(10, 16), boards=['title', 'about', 'stats'], min_stage=3, min_board=5, scenarios=True,
+    structure="""This is ONE SEGMENT (about a minute) of "{long_title}", an evergreen explainer; the segment explains {name}.
 1. INTRO (charlie, scene "board", board "title"): introduce {{NAME}} ({seg_label}).
-2. WHAT IT IS (3-4 charlie lines, scene "board", board "about"): in plain English, what the project does, what
-   problem it tries to solve, and what the token is used for — ONLY from these facts, add nothing:
+2. WHAT IT IS (4-6 charlie lines, scene "board", board "about"): in plain English, what the project does, what
+   problem it tries to solve, who uses it and what the token is for — ONLY from these facts, add nothing:
    categories: {categories}
    description: {description}
-3. The sidekick asks one funny, naive question about it (scene "stage"); Charlie answers dryly in one line (stage).
-4. SCORECARD (charlie, scene "board", board "stats"): one line about its market cap rank or recent move ({move_ph}).
+   Use a simple everyday analogy once. The sidekick may interrupt once with a naive question (scene "stage").
+3. BANTER (2 lines, scene "stage"): the sidekick gives a funny take on the project; Charlie answers dryly.
+4. SCORECARD (1-2 charlie lines, scene "board", board "stats"): market cap rank and today's move ({move_ph}).
 5. CHART (scene "chart", charlie, pose "pointing"): chart_action "show"; "draw_resistance" containing {{R1}};
    "draw_support" containing {{S1}}.
-6. CLOSE (1 line, sidekick, scene "stage"): a quick joke to hand over to the next project.
+6. LEVELS MAP (charlie, scene "chart"):
+{scenario_rules}
+7. CLOSE (1 line, sidekick, scene "stage"): a quick joke to hand over to the next project.
 Do NOT add the disclaimer line in a segment.
 """)
 
 SCHOOL_SEGMENT = dict(
-    lines=(6, 10), boards=['title', 'LESSON'], min_stage=1, min_board=2, scenarios=False,
-    structure="""This is ONE SEGMENT of "{long_title}", a Chart School episode about {concept_title}.
+    lines=(8, 14), boards=['title', 'LESSON', 'stats'], min_stage=2, min_board=3, scenarios=True,
+    structure="""This is ONE SEGMENT (about a minute) of "{long_title}", a Chart School episode about {concept_title}.
 Facts to teach: {concept_text}. In this segment the concept is applied to {name}.
 1. INTRO (charlie, scene "board", board "title"): introduce example {{NAME}} ({seg_label}).
-2. APPLY (2 charlie lines, scene "board", board "{lesson_board}"): what the concept shows on this coin ({apply_hint}).
-3. The sidekick reacts or asks a silly question (scene "stage").
+2. APPLY (2-3 charlie lines, scene "board", board "{lesson_board}"): what the concept shows on this coin ({apply_hint}).
+3. QUESTION (2 lines, scene "stage"): the sidekick asks a silly but real beginner question; Charlie answers simply.
 4. CHART (scene "chart", charlie, pose "pointing"): chart_action "show"; "draw_resistance" containing {{R1}};
    "draw_support" containing {{S1}}; relate the concept to the chart.
-5. CLOSE (1 line, sidekick or charlie, scene "stage"): hand over to the next example.
+5. LEVELS MAP (charlie, scene "chart"):
+{scenario_rules}
+6. CLOSE (1 line, sidekick or charlie, scene "stage"): hand over to the next example.
 Do NOT add the disclaimer line in a segment.
 """)
 
@@ -389,6 +394,41 @@ LESSONS = {
 }
 
 
+# Chart School uzun bölüm girişi: sabit, doğrulanmış ders metni (rakam yok, tavsiye yok)
+LESSONS_LONG = {
+    'rsi': ['RSI stands for relative strength index.',
+            'It looks at recent candles and asks one question: how strong were the up moves compared to the down moves?',
+            'The answer is shown as a gauge, from washed out on the left to overheated on the right.',
+            'A high reading means buyers have been pushing hard. A low reading means sellers have.',
+            'It does not tell you what happens next. It tells you how stretched the move already is.',
+            'Traders usually read it together with support and resistance, never alone.'],
+    'sr': ['Support is a price area where buyers stepped in before and stopped a fall.',
+           'Resistance is a price area where sellers stepped in before and stopped a rise.',
+           'Think of a ball bouncing between a floor and a ceiling.',
+           'The more times price touched a level, the more traders pay attention to it.',
+           'When a ceiling breaks, it can turn into a floor, and the other way around.',
+           'Levels are zones, not laser lines. Price often pokes through a little.'],
+    'volume': ['Volume is simply how much of a coin actually changed hands.',
+               'Price tells you where it went. Volume tells you how many people agreed.',
+               'A big move on tiny volume is like a loud party with three guests.',
+               'A big move on heavy volume means a lot of traders took part.',
+               'That is why chart readers compare today with the recent average.',
+               'Volume bars sit under the chart, green for up candles and red for down ones.'],
+    'trend': ['A moving average is the average price over the last stretch of candles.',
+              'It moves forward with every new candle, which smooths out the noise.',
+              'A fast average reacts quickly. A slow average reacts calmly.',
+              'Price above both usually reads as an uptrend. Below both reads as a downtrend.',
+              'When the fast one crosses the slow one, traders call it a crossover.',
+              'Averages describe the trend that already happened. They lag by design.'],
+    'candles': ['Every candle is a small story about one chunk of time. Here, four hours.',
+                'The thick body runs from where price opened to where it closed.',
+                'Green means it closed higher than it opened. Red means it closed lower.',
+                'The thin wicks show the highest and lowest prices during those hours.',
+                'Long wicks mean price went somewhere and got pushed back.',
+                'Read a few candles together and you start to see who is in control.'],
+}
+
+
 def apply_line(concept, data, ph):
     return {'rsi': 'On {SYMBOL}, RSI is {RSI}. That reads ' + rsi_zone(data.get('rsi_14')) + '.' if 'RSI' in ph else None,
             'volume': '{SYMBOL} volume is {VOLX} its recent average.' if 'VOLX' in ph else None,
@@ -415,7 +455,10 @@ def explained_template(data, rnd, label):
     L.say('charlie', rnd.choice(['No. It comes with a chart.', 'Sadly, no. But it has a chart.']), 'smug', 'standing')
     L.say('charlie', 'By market cap it ranks {MCAPRANK}.' if 'MCAPRANK' in ph else 'Here is its scorecard.',
           'neutral', 'standing', 'board', board='stats')
+    L.say('charlie', f'Today it is {"up" if data["change_24h_pct"] >= 0 else "down"} {{CHANGE}}.', 'neutral',
+          'standing', 'board', board='stats')
     _chart(L, rnd)
+    _levels_map(L, ph)
     L.say(side, rnd.choice(['Next project! I have more questions!', 'Okay, who is next?']) if bull else
           rnd.choice(['Next one. Impress me.', 'Moving on. Slowly.']), 'happy' if bull else 'smug',
           'hips' if bull else 'arms_crossed')
@@ -435,7 +478,10 @@ def school_segment_template(data, rnd, label, concept):
     L.say(side, rnd.choice(['I get it! I think. Maybe.', 'Wait, I actually understood that!']) if bull else
           rnd.choice(['Fine. That was mildly useful.', 'I hate that this makes sense.']),
           'happy' if bull else 'smug', 'hips' if bull else 'arms_crossed')
+    L.say('charlie', rnd.choice(['That is the whole trick. Now watch it on the chart.',
+                                 'Good. Now the real chart.']), 'smug', 'standing')
     _chart(L, rnd)
+    _levels_map(L, ph)
     L.say(side, rnd.choice(['Next example, professor!', 'More! Give me more!']) if bull else
           rnd.choice(['Next patient, please.', 'Go on. I am listening. Barely.']), 'excited' if bull else 'smug',
           'hips' if bull else 'arms_crossed')

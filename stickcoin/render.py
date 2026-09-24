@@ -462,7 +462,8 @@ def render(video, out_dir, preview_png=None):
     """-> (mp4, süre, bölüm başlangıçları [(saniye, başlık)])"""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    lines, total, end0, wav = build_timeline(video, out_dir)
+    # uzun video: biraz daha sakin tempo (anlatım), Shorts: config hızı
+    lines, total, end0, wav = build_timeline(video, out_dir, speed_mul=0.94 if video['layout'] == 'long' else 1.0)
     if video['layout'] == 'short' and total > 58.5:
         k = min(1.35, total / 57.0)
         log(f'{total:.1f}s too long, re-voicing at x{k:.2f}')

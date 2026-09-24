@@ -115,8 +115,9 @@ def validate(sc, data, spec, segment=False, lesson_board=None):
         if 'financial advice' in low:
             problems.append(f'line {i + 1}: "financial advice" outside the disclaimer')
         n_words = len(expand_text(text, ph)[0].split())
-        if n_words > 14:
-            problems.append(f'line {i + 1}: {n_words} words (max 14): {text}')
+        max_words = 20 if segment else 14
+        if n_words > max_words:
+            problems.append(f'line {i + 1}: {n_words} words (max {max_words}): {text}')
         act = L['chart_action']
         if act != 'none':
             if act in seen:
@@ -195,7 +196,7 @@ SCENES — every line has a "scene":
 - "board": an info board; set "board" to one of: {boards}
 Mix the scenes as the structure says; the video must feel alive, not like a slideshow.
 
-STRUCTURE ({n_lines} lines total, max 14 words per line):
+STRUCTURE ({n_lines} lines total, max {max_words} words per line):
 {structure}
 Hard rules:
 - Never tell anyone to buy, sell or "get in". No "too late", "don't miss", no price targets, no promises
@@ -233,6 +234,7 @@ def build_prompt(data, spec, hook, punch, concept=None, segment=None):
         sidekick_bio=CAST[side]['bio'], name=data['coin']['name'], symbol=data['coin']['symbol'],
         context=json.dumps(context), placeholders='\n'.join(f'  {{{k}}} = {v[0]}' for k, v in ph.items()),
         boards=', '.join(boards), n_lines='-'.join(map(str, spec['lines'])), structure=structure,
+        max_words=20 if segment else 14,
         emotions=', '.join(EMOTIONS), poses=', '.join(POSES))
 
 

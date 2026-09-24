@@ -134,7 +134,7 @@ def pick_long(kind, vid, hist=None):
             lists['gainer'][:15] + lists['loser'][:15]
         seen = set()
         for m in pool:
-            if len(out) == 3:
+            if len(out) == 5:
                 break
             if m['id'] in seen or m['id'] in done or market.mentioned(m, sibling_titles()):
                 continue
@@ -148,7 +148,7 @@ def pick_long(kind, vid, hist=None):
         big = sorted(lists['gainer'], key=lambda m: m.get('market_cap_rank') or 10 ** 6)
         mixed = [m for pair in zip(lists['gainer'][:10], lists['loser'][:10]) for m in pair]
         for m in [big[0]] + mixed:
-            if len(out) == 3:
+            if len(out) == 4:
                 break
             if any(d['coin']['id'] == m['id'] for d in out):
                 continue
