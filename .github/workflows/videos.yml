@@ -1,0 +1,87 @@
+name: videos
+on:
+  schedule:
+    # Bölüm 2: TR 10:00 / 17:00 / 23:00 yayın. Cron ~25 dk önce başlar (GitHub gecikmesi + ~5 dk render).
+    - cron: "35 6 * * *"
+    - cron: "35 13 * * *"
+    - cron: "35 19 * * *"
+  workflow_dispatch:
+    inputs:
+      no_upload:
+        description: Render only, do not upload
+        type: boolean
+        default: false
+      coin:
+        description: Force a CoinGecko id (e.g. solana). Empty = automatic pick
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-writes
+  cancel-in-progress: false
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg libcairo2-dev pkg-config
+      - run: pip install -r requirements.txt
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/stickstory
+          key: kokoro-v1.0
+      - name: Validator self-test
+        run: python tests/test_validate.py
+      - name: Run pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          YT_PRIVACY: ${{ vars.YT_PRIVACY }}
+          SCRIPT_SOURCE: ${{ vars.SCRIPT_SOURCE }}
+          NO_UPLOAD: ${{ inputs.no_upload }}
+          COIN: ${{ inputs.coin }}
+        run: |
+          ARGS=()
+          [ "$NO_UPLOAD" = "true" ] && ARGS+=(--no-upload)
+          [ -n "$COIN" ] && ARGS+=(--coin "$COIN")
+          python run.py "${ARGS[@]}"
+      - name: Keep video for review
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: video-${{ github.run_id }}
+          path: |
+            output/*/video.mp4
+            output/*/script.json
+            output/*/data.json
+            output/*/meta.json
+            output/*/thumb.png
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Commit log
+        if: always()
+        run: |
+          git config user.name "stickcoin-bot"
+          git config user.email "bot@users.noreply.github.com"
+          for p in history.json assets/logos; do [ -e "$p" ] && git add "$p" || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "video: $(date -u +%F-%H%M)"
+          git pull --rebase
+          git push
