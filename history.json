@@ -1,0 +1,34 @@
+{
+  "videos": [
+    {
+      "id": "crypto_2026-09-24_1705_gainer",
+      "coin": "lisk",
+      "symbol": "LSK",
+      "price": 0.401339,
+      "change_24h_pct": 34.7,
+      "kind": "gainer",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "pmUNKe3bNZg",
+      "privacy": "private",
+      "title": "LSK support at $0.3412 — hold or fold? 😬",
+      "date": "2026-09-24 17:06"
+    },
+    {
+      "id": "crypto_2026-09-24_1705_loser",
+      "coin": "marscoin-4",
+      "symbol": "MARSCOIN",
+      "price": 0.117383,
+      "change_24h_pct": -18.5,
+      "kind": "loser",
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "uCdL8i2mLVk",
+      "privacy": "private",
+      "title": "MARSCOIN -18.5% today — key levels to watch 📊",
+      "date": "2026-09-24 17:11"
+    }
+  ]
+}
