@@ -198,6 +198,12 @@ def main():
             'title': title, 'date': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')})
         hist['videos'] = hist['videos'][-300:]
         HIST.write_text(json.dumps(hist, indent=2, ensure_ascii=False), encoding='utf-8')
+        pls = json.loads((HERE / 'playlists.json').read_text(encoding='utf-8')) if (HERE / 'playlists.json').exists() else {}
+        if kind in pls:
+            try:
+                upload.add_to_playlist(pls[kind], video_id); log(f'added to playlist {kind}')
+            except Exception as e:
+                log(f'playlist add skipped: {str(e)[:160]}')
         notify.video(mp4, f'✅ {title}\n{url} ({mode})')
     if failed:
         raise SystemExit(1)
