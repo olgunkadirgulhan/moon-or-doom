@@ -75,7 +75,7 @@ def placeholders(data):
     sym_say = ' '.join(sym) if not any(ch in 'AEIOU' for ch in sym.upper()) else sym.capitalize()
     ph = {'SYMBOL': ('$' + sym, sym_say), 'NAME': (c['name'], c['name'])}
     for key, field in (('PRICE', 'price'), ('R1', 'resistance_1'), ('R2', 'resistance_2'), ('S1', 'support_1'),
-                       ('S2', 'support_2'), ('EMA50', 'ema_50'), ('EMA200', 'ema_200')):
+                       ('S2', 'support_2')):  # EMA sayıları verilmez: bağlamsız okununca anlamsız; trend sözle anlatılır
         if data.get(field) is not None:
             ph[key] = (price_text(data[field]), price_say(data[field]))
     ph['CHANGE'] = (pct_text(data['change_24h_pct']), pct_say(data['change_24h_pct']))
