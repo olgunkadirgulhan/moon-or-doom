@@ -1,6 +1,8 @@
 # Çöp Adam Kripto — ayarlar (tasarım: cizgi-kripto-yorum-kanali.md)
 
-daily_videos: 3            # günlük video üst sınırı; cron 3 slot çalıştırır, fazlası atlanır
+daily_videos: 6            # günlük üst sınır: 3 çalıştırma x (en çok yükselen + en çok düşen)
+pair_gap_minutes: 5        # aynı çalıştırmadaki iki video arası
+universe_pages: 2          # CoinGecko piyasa değerine göre ilk 500 coin içinden yükselen/düşen
 
 filters:                   # Bölüm 5: mikro coin / stablecoin koruması
   min_market_cap: 50000000
@@ -13,7 +15,6 @@ filters:                   # Bölüm 5: mikro coin / stablecoin koruması
 repeat:
   hours: 48                # aynı coin 48 saat işlenmez...
   move_override_pct: 15    # ...son videodan beri %15'ten fazla oynamadıysa
-  majors_every_days: 7     # BTC ve ETH trend olmasa da haftada 1'er kez
 
 chart:
   interval: 4h

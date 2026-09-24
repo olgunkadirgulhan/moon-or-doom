@@ -183,15 +183,27 @@ def trend_text(data):
     return 'price chopping between the 50 and 200 EMA (mixed trend)'
 
 
-def why_hint(data):
-    r = data['reason_trending']
-    if r.startswith('coingecko_trending_rank_'):
-        return 'it is {RANK} on CoinGecko trending' + (', volume is {VOLX} its average' if data.get('volume_vs_avg') else '')
+def mover_line(data):
+    """Neden ekranda: günün en çok yükseleni / düşeni (sırası 1 değilse 'one of')."""
+    r, first, up = data['reason_trending'], data.get('mover_rank') == 1, data['change_24h_pct'] >= 0
     if r == 'top_gainer_24h':
-        return "it is one of today's biggest gainers among large coins"
+        return "{NAME} is today's biggest gainer among large coins." if first else \
+            "{NAME} is one of today's biggest gainers among large coins."
     if r == 'top_loser_24h':
-        return "it is one of today's biggest losers among large coins"
-    return 'our weekly check-in on a major coin'
+        if up:
+            return '{NAME} is the weakest large coin today, even in a green market.'
+        return "{NAME} is today's biggest loser among large coins." if first else \
+            "{NAME} is one of today's biggest losers among large coins."
+    return '{NAME} is on our radar today.'
+
+
+def why_hint(data):
+    hint = mover_line(data).replace('{NAME} is', 'it is').rstrip('.')
+    if data.get('trending_rank'):
+        hint += ', and it is {RANK} on CoinGecko trending'
+    if data.get('volume_vs_avg'):
+        hint += ', volume is {VOLX} its recent average'
+    return hint
 
 
 # ------------------------------------------------------------------ Gemini senaryosu
@@ -249,13 +261,7 @@ def template_script(data, hook, punch, rnd):
         L.append({'char': char, 'text': text, 'emotion': emotion, 'pose': pose, 'chart_action': act, 'jump': jump})
 
     say(side, hooks[bull][hook], 'excited' if bull else 'smug', 'celebrate' if bull else 'arms_crossed', jump=bull)
-    r = data['reason_trending']
-    if r.startswith('coingecko_trending_rank_'):
-        say('charlie', '{NAME} is {RANK} on CoinGecko trending right now.', 'neutral', 'standing')
-    elif r == 'weekly_major':
-        say('charlie', "Weekly check-in on {NAME}. Let's see where it stands.", 'neutral', 'standing')
-    else:
-        say('charlie', "{NAME} is one of today's biggest movers among large coins.", 'neutral', 'standing')
+    say('charlie', mover_line(data), 'neutral', 'standing')
     if 'VOLX' in ph:
         say('charlie', 'Volume is running {VOLX} its recent average. Here is the chart.', 'neutral', 'pointing', 'show')
     else:

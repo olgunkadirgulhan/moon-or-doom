@@ -10,8 +10,12 @@ CoinGecko trend + filtre + 48 saat kuralı → borsa mumları (Binance → OKX �
 → ffmpeg → fiyat tazelik kontrolü (%3) → YouTube Shorts → Telegram bildirimi
 ```
 
-Takvim: TR 10:00 / 17:00 / 23:00. Slot 1 = #1 trend, slot 2 = BTC/ETH haftalığı veya sıradaki trend / en çok yükselen,
-slot 3 = en çok düşen (≤ -5%) veya sıradaki trend.
+Takvim: TR ~10:00 / 17:00 / 23:00, her çalıştırmada 2 video: günün en çok yükseleni (Moon Max) ve en çok düşeni
+(Bear Betty), arada 5 dk. Günde 6 video. Aynı coin 48 saat içinde tekrar gelmez (%15+ hareket hariç), sıradaki alınır.
+Her videonun sonunda beğen / abone ol / zil kapanış kartı var.
+
+YouTube kotası: Google Cloud projesi başına günlük 10.000 birim, her yükleme 1.600 birim → 6 video = 9.600 birim.
+Bu yüzden bu kanal için **ayrı bir Google Cloud projesi** kullan (StickStory ile aynı projeyi paylaşırsa kota yetmez).
 
 ## Sayı güvenliği (Bölüm 1)
 LLM hiçbir sayı yazamaz. Senaryoda `{R1}`, `{S1}`, `{CHANGE}` gibi yer tutucular kullanır ve kod bunları doğrulanmış
@@ -30,7 +34,7 @@ Ayarlar `config.yaml` içinde: günlük video sayısı, filtreler, tekrar kural�
 ## Yerel test
 ```
 pip install -r requirements.txt
-python run.py --no-upload                  # sıradaki slot, output/<id>/video.mp4
+python run.py --no-upload                  # yükselen + düşen, output/<id>/video.mp4
+python run.py --no-upload --only loser     # sadece düşen (Bear Betty)
 python run.py --no-upload --coin solana    # belirli coin
-python run.py --no-upload --slot 3         # düşüş slotu (Bear Betty)
 ```

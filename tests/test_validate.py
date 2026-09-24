@@ -9,7 +9,7 @@ from stickcoin import script, words  # noqa: E402
 
 DATA = {
     'id': 'test', 'coin': {'id': 'solana', 'symbol': 'SOL', 'name': 'Solana', 'logo': ''},
-    'reason_trending': 'coingecko_trending_rank_1', 'trending_rank': 1, 'price': 173.42, 'change_24h_pct': 18.2,
+    'reason_trending': 'top_gainer_24h', 'mover_rank': 1, 'trending_rank': 1, 'price': 173.42, 'change_24h_pct': 18.2,
     'change_7d_pct': 22.4, 'volume_vs_avg': 2.4, 'rsi_14': 71.3, 'ema_50': 158.1, 'ema_200': 149.75,
     'resistance_1': 182.0, 'resistance_2': 195.4, 'support_1': 164.2, 'support_2': 151.0,
     'mood': 'bullish', 'sidekick': 'moon_max',

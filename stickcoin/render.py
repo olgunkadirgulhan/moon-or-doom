@@ -16,7 +16,7 @@ import numpy as np
 import soundfile as sf
 from PIL import Image, ImageDraw, ImageFont
 
-from . import ROOT, audio, rig, scenes, words
+from . import ROOT, audio, endcard, rig, scenes, words
 from .cast import CAST
 from .chart import Chart, DOWN, UP
 
@@ -146,14 +146,17 @@ def build_timeline(sc, data, workdir, speed_mul=1.0):
         t = L['speech'][1] + (0.9 if i == n - 3 else 0.25)
         L['end'] = t
         lines.append(L)
-    total = t + 0.8
+    end0 = t + 0.4  # kapanış kartı: beğen / abone ol / zil
+    for dt, name in ((endcard.CLICK_LIKE, 'pop'), (endcard.CLICK_SUB, 'pop'), (endcard.CLICK_BELL, 'ding')):
+        effects.append((end0 + dt, audio.sfx(name, 90), 0.55))
+    total = end0 + endcard.DUR
     mt = np.array([m[0] for m in mask] + [total]); mv = np.array([m[1] for m in mask] + [0])
     order = np.argsort(mt, kind='stable')
     track = audio.music(total + 1, seed=stable(sc.get('id', data['id'])) % 10_000, mood=data['mood'])
     stereo = audio.mix(total, voices, effects, track, (mt[order], mv[order]))
     wav = Path(workdir) / 'audio.wav'
     sf.write(str(wav), stereo, audio.SR)
-    return lines, total, wav
+    return lines, total, end0, wav
 
 
 # ------------------------------------------------------------------ kare çizimi
@@ -169,8 +172,8 @@ class Actor:
 
 
 class Renderer:
-    def __init__(self, sc, data, lines, total):
-        self.sc, self.d, self.lines, self.total = sc, data, lines, total
+    def __init__(self, sc, data, lines, total, end0):
+        self.sc, self.d, self.lines, self.total, self.end0 = sc, data, lines, total, end0
         rnd = random.Random(stable(data['id']))
         self.scene = scenes.for_mood(data['change_24h_pct'], rnd)
         self.bg = scenes.render(self.scene, W, H, GROUND, SCENE_TOP, seed=stable(data['id']) % 1000)
@@ -318,9 +321,13 @@ class Renderer:
                 rig.pointer(ctx, hand, focus if pointing else (hand[0] + 70, hand[1] - 200), 240 if pointing else 150)
         if L is not None:
             self.subtitle(L, t)
-        # son 0.5 sn: kapanış kararması
-        if t > self.total - 0.5:
-            ctx.set_source_rgba(0, 0, 0, ease((t - (self.total - 0.5)) / 0.5) * 0.6); ctx.paint()
+        if t >= self.end0:
+            lt = t - self.end0
+            ctx.set_source_rgba(0, 0, 0, 0.45 * ease(lt / 0.35)); ctx.paint()
+            card = pil_to_surface(endcard.layer(W, lt, 'TOP GAINER & LOSER · 3X DAILY'))
+            ctx.set_source_surface(card, 0, 560); ctx.paint()
+        if t > self.total - 0.3:
+            ctx.set_source_rgba(0, 0, 0, ease((t - (self.total - 0.3)) / 0.3) * 0.6); ctx.paint()
         self.surf.flush()
 
 
@@ -350,13 +357,13 @@ def mouth_shape(lvl, L, rel, emo):
 def render(sc, data, out_dir, preview_png=None):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    lines, total, wav = build_timeline(sc, data, out_dir)
+    lines, total, end0, wav = build_timeline(sc, data, out_dir)
     if total > 58.5:
         k = min(1.35, total / 57.0)
         log(f'{total:.1f}s too long, re-voicing at x{k:.2f}')
-        lines, total, wav = build_timeline(sc, data, out_dir, speed_mul=k)
+        lines, total, end0, wav = build_timeline(sc, data, out_dir, speed_mul=k)
     log(f'timeline {total:.1f}s, {len(lines)} lines')
-    R = Renderer(sc, data, lines, total)
+    R = Renderer(sc, data, lines, total, end0)
     mp4 = out_dir / 'video.mp4'
     cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgra', '-s', f'{W}x{H}',
            '-r', str(FPS), '-i', '-', '-i', str(wav), '-map', '0:v', '-map', '1:a',

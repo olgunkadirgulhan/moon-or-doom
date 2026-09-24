@@ -1,10 +1,11 @@
-"""Çöp Adam Kripto hattı. Bir çalıştırma = bir video (Bölüm 10).
+﻿"""Çöp Adam Kripto hattı. Bir çalıştırma = 2 video: günün en çok yükseleni + en çok düşeni, arada 5 dk (Bölüm 10).
 
     coin seçimi -> mumlar + seviyeler -> senaryo (Gemini + doğrulama) -> ses + animasyon -> tazelik kontrolü -> YouTube
 
 Kullanım
-  python run.py                      # sıradaki slot için 1 video (yükleme secrets varsa)
+  python run.py                      # yükselen + düşen (yükleme secrets varsa)
   python run.py --no-upload          # sadece render: output/<id>/video.mp4
+  python run.py --only loser --no-upload
   python run.py --coin solana --no-upload
   python run.py --data output/<id>/data.json --no-upload   # aynı veriyle yeniden render
 
@@ -20,6 +21,7 @@ import json
 import os
 import random
 import sys
+import time
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
@@ -67,6 +69,10 @@ def metadata(data, rnd):
     titles = [f"{sym} {'+' if chg >= 0 else '-'}{abs(chg):.1f}% today — key levels to watch 📊",
               f"Is {sym} about to break {p(data['resistance_1'])}? 👀",
               f"{sym} support at {p(data['support_1'])} — hold or fold? 😬"]
+    if data.get('mover_rank') == 1 and data['reason_trending'] == 'top_gainer_24h':
+        titles.append(f"{sym} is today's top gainer (+{chg:.1f}%) — what's next? 🚀")
+    if data.get('mover_rank') == 1 and data['reason_trending'] == 'top_loser_24h' and chg < 0:
+        titles.append(f"{sym} is today's biggest loser ({chg:.1f}%) — where's support? 📉")
     title = rnd.choice(titles)
     lv = [f"🔴 Resistance: {p(data['resistance_1'])}" +
           (f" (next: {p(data['resistance_2'])})" if data.get('resistance_2') else ''),
@@ -84,7 +90,7 @@ def metadata(data, rnd):
     return title, desc, tags
 
 
-def produce(slot, hist, vid, args, exclude=()):
+def produce(kind, hist, vid, args, exclude=()):
     if args.data:
         data = json.loads(Path(args.data).read_text(encoding='utf-8'))
     elif args.coin:
@@ -95,7 +101,7 @@ def produce(slot, hist, vid, args, exclude=()):
         if not data:
             raise SystemExit(f'{args.coin}: no usable chart data')
     else:
-        data = picker.pick(slot, hist, vid, exclude)
+        data = picker.pick(kind, hist, vid, exclude)
     out = OUT / vid
     out.mkdir(parents=True, exist_ok=True)
     (out / 'data.json').write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding='utf-8')
@@ -106,7 +112,7 @@ def produce(slot, hist, vid, args, exclude=()):
         log(f"  {L['char']:>10} [{L['chart_action']}] {L['display']}")
     mp4, dur = render.render(sc, data, out, preview_png=out / 'thumb.png')
     log(f'rendered {mp4} ({dur:.1f}s, script: {sc["source"]})')
-    return data, sc, mp4, dur
+    return data, sc, mp4
 
 
 def fresh(data):
@@ -120,67 +126,83 @@ def fresh(data):
     return move <= CONFIG['freshness']['max_move_pct']
 
 
+def make_one(kind, hist, args, stamp, exclude):
+    for attempt in range(2):
+        vid = f'crypto_{stamp}_{kind}' + (f'_r{attempt}' if attempt else '')
+        data, sc, mp4 = produce(kind, hist, vid, args, exclude)
+        if args.data or args.coin or fresh(data):
+            return data, sc, mp4
+        gh_annotation('warning', f"{data['coin']['symbol']} moved more than {CONFIG['freshness']['max_move_pct']}% "
+                                 'since the data was pulled, rebuilding with fresh data')
+    raise RuntimeError('price still moving too fast after rebuild')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-upload', action='store_true')
-    ap.add_argument('--coin', help='CoinGecko id (seçimi atla)')
-    ap.add_argument('--data', help='hazır data.json ile render')
-    ap.add_argument('--slot', type=int, help='1/2/3 (varsayılan: bugün yüklenen + 1)')
+    ap.add_argument('--only', choices=picker.KINDS, help='sadece yükselen ya da sadece düşen')
+    ap.add_argument('--coin', help='CoinGecko id (seçimi atla, tek video)')
+    ap.add_argument('--data', help='hazır data.json ile render (tek video)')
     args = ap.parse_args()
     import upload
 
     mode = privacy_mode(args.no_upload)
     hist = picker.load_hist(HIST)
-    slot = args.slot or today_count(hist) + 1
-    log(f'slot {slot} | upload mode: {mode}')
+    kinds = ['manual'] if args.coin or args.data else [args.only] if args.only else list(picker.KINDS)
+    log(f"videos: {', '.join(kinds)} | upload mode: {mode}")
     if mode != 'off':
-        if today_count(hist) >= CONFIG['daily_videos']:
+        left = CONFIG['daily_videos'] - today_count(hist)
+        if left <= 0:
             log(f"daily cap of {CONFIG['daily_videos']} reached, nothing to do"); return
+        kinds = kinds[:left]
         try:
             log(f'channel check ok: {upload.check_channel()}')
         except Exception as e:
             gh_annotation('error', f'channel check failed, nothing uploaded: {e}'); raise SystemExit(1)
 
     stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H%M')
-    data = sc = mp4 = None
-    for attempt in range(2):
-        vid = f'crypto_{stamp}_s{slot}' + (f'_r{attempt}' if attempt else '')
+    gap = CONFIG['pair_gap_minutes'] * 60
+    failed, last_upload, used = False, None, []
+    for kind in kinds:
         try:
-            data, sc, mp4, dur = produce(slot, hist, vid, args)
+            data, sc, mp4 = make_one(kind, hist, args, stamp, used)
         except SystemExit:
             raise
         except Exception as e:
-            traceback.print_exc(); gh_annotation('error', f'production failed: {e}'); raise SystemExit(1)
-        if args.data or fresh(data):
-            break
-        gh_annotation('warning', f"{data['coin']['symbol']} moved more than {CONFIG['freshness']['max_move_pct']}% "
-                                 'since the data was pulled, rebuilding with fresh data')
-    else:
-        gh_annotation('error', 'price still moving too fast after rebuild, slot skipped'); raise SystemExit(1)
-
-    title, desc, tags = metadata(data, random.Random(data['id']))
-    (OUT / data['id'] / 'meta.json').write_text(json.dumps({'title': title, 'description': desc, 'tags': tags},
-                                                           indent=2, ensure_ascii=False), encoding='utf-8')
-    log(f'title: {title}')
-    if mode == 'off':
-        log('upload skipped (mode off)'); return
-    try:
-        video_id = upload.upload(mp4, title, desc, tags, mode, category='27')
-    except upload.QuotaError:
-        gh_annotation('warning', 'YouTube quota reached, video skipped (data would be stale later).'); return
-    except Exception as e:
-        traceback.print_exc(); gh_annotation('error', f'upload failed: {e}'); raise SystemExit(1)
-    url = f'https://youtube.com/shorts/{video_id}'
-    log(f'uploaded {url} ({mode})')
-    hist.setdefault('videos', []).append({
-        'id': data['id'], 'coin': data['coin']['id'], 'symbol': data['coin']['symbol'], 'price': data['coingecko_price'],
-        'change_24h_pct': data['change_24h_pct'], 'reason': data['reason_trending'], 'slot': slot,
-        'hook': sc['hook'], 'punch': sc['punch'], 'script': sc['source'], 'video_id': video_id, 'privacy': mode,
-        'title': title, 'date': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')})
-    hist['videos'] = hist['videos'][-300:]
-    HIST.write_text(json.dumps(hist, indent=2, ensure_ascii=False), encoding='utf-8')
-    notify.video(mp4, f'✅ {title}\n{url} ({mode})')
+            traceback.print_exc(); gh_annotation('error', f'{kind} video failed: {e}'); failed = True; continue
+        used.append(data['coin']['id'])
+        title, desc, tags = metadata(data, random.Random(data['id']))
+        (OUT / data['id'] / 'meta.json').write_text(json.dumps({'title': title, 'description': desc, 'tags': tags},
+                                                               indent=2, ensure_ascii=False), encoding='utf-8')
+        log(f'title: {title}')
+        if mode == 'off':
+            log('upload skipped (mode off)'); continue
+        if last_upload is not None:  # aynı çalıştırmadaki iki video arası 5 dk
+            wait = gap - (time.time() - last_upload)
+            if wait > 0:
+                log(f'waiting {wait / 60:.1f} min before the next upload'); time.sleep(wait)
+        try:
+            video_id = upload.upload(mp4, title, desc, tags, mode, category='27')
+        except upload.QuotaError:
+            gh_annotation('warning', 'YouTube quota reached, remaining videos skipped.'); break
+        except Exception as e:
+            traceback.print_exc(); gh_annotation('error', f'upload failed: {e}'); failed = True; continue
+        last_upload = time.time()
+        url = f'https://youtube.com/shorts/{video_id}'
+        log(f'uploaded {url} ({mode})')
+        hist.setdefault('videos', []).append({
+            'id': data['id'], 'coin': data['coin']['id'], 'symbol': data['coin']['symbol'],
+            'price': data['coingecko_price'], 'change_24h_pct': data['change_24h_pct'], 'kind': kind,
+            'hook': sc['hook'], 'punch': sc['punch'], 'script': sc['source'], 'video_id': video_id, 'privacy': mode,
+            'title': title, 'date': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')})
+        hist['videos'] = hist['videos'][-300:]
+        HIST.write_text(json.dumps(hist, indent=2, ensure_ascii=False), encoding='utf-8')
+        notify.video(mp4, f'✅ {title}\n{url} ({mode})')
+    if failed:
+        raise SystemExit(1)
 
 
 if __name__ == '__main__':
     main()
+
+

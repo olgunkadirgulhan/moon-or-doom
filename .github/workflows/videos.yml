@@ -1,7 +1,8 @@
 name: videos
 on:
   schedule:
-    # Bölüm 2: TR 10:00 / 17:00 / 23:00 yayın. Cron ~25 dk önce başlar (GitHub gecikmesi + ~5 dk render).
+    # TR 10:00 / 17:00 / 23:00 civarı: her çalıştırma en çok yükselen + en çok düşen, arada 5 dk.
+    # Cron ~25 dk önce başlar (GitHub gecikmesi + render).
     - cron: "35 6 * * *"
     - cron: "35 13 * * *"
     - cron: "35 19 * * *"
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   make:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       PYTHONUTF8: "1"
     steps:
