@@ -82,8 +82,9 @@ def metadata(data, rnd):
     desc = (f"{data['coin']['name']} ({sym}) {'+' if chg >= 0 else '-'}{abs(chg):.1f}% in 24h at {p(data['price'])}. "
             f"Chart Charlie walks through the levels that matter.\n\n" + '\n'.join(lv) + '\n\n'
             'Levels calculated from 4H chart data. Educational content only — not financial advice.\n'
-            'Crypto is highly volatile; do your own research.\n'
-            f"#crypto #{sym.lower()} #shorts")
+            'Crypto is highly volatile; do your own research.\n\n'
+            "Moon or Doom: today's top gainer & top loser, 3x a day. Subscribe so you never miss the levels.\n"
+            f"#crypto #{sym.lower()} #MoonOrDoom #shorts")
     tags = ['crypto', data['coin']['name'], sym, f'{sym} price', f"{data['coin']['name']} price prediction",
             'crypto analysis', 'technical analysis', 'support and resistance', 'altcoins', 'crypto news',
             'crypto shorts', 'animation', 'stick figure']

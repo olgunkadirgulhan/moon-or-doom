@@ -324,7 +324,7 @@ class Renderer:
         if t >= self.end0:
             lt = t - self.end0
             ctx.set_source_rgba(0, 0, 0, 0.45 * ease(lt / 0.35)); ctx.paint()
-            card = pil_to_surface(endcard.layer(W, lt, 'TOP GAINER & LOSER · 3X DAILY'))
+            card = pil_to_surface(endcard.layer(W, lt, 'MOON OR DOOM · TOP GAINER & LOSER 3X DAILY'))
             ctx.set_source_surface(card, 0, 560); ctx.paint()
         if t > self.total - 0.3:
             ctx.set_source_rgba(0, 0, 0, ease((t - (self.total - 0.3)) / 0.3) * 0.6); ctx.paint()
