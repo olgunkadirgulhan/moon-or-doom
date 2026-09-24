@@ -127,7 +127,7 @@ def metadata(data, sc, rnd):
 
 # ------------------------------------------------------------------ Shorts
 
-def produce_short(kind, hist, vid, args, exclude=()):
+def produce_short(kind, hist, vid, args, exclude=(), avoid_formats=()):
     if args.data:
         data = json.loads(Path(args.data).read_text(encoding='utf-8'))
     elif args.coin:
@@ -140,7 +140,7 @@ def produce_short(kind, hist, vid, args, exclude=()):
     else:
         data = picker.pick(kind, hist, vid, exclude)
     rnd = random.Random(vid)
-    fmt = args.format or formats.pick_format(hist, rnd, data)
+    fmt = args.format or formats.pick_format(hist, rnd, data, avoid_formats)
     concept = (args.concept or formats.pick_concept(hist, rnd, data)) if fmt == 'school' else None
     log(f'format: {fmt}' + (f' ({concept})' if concept else ''))
     out = OUT / vid
@@ -170,10 +170,10 @@ def fresh(data):
     return move <= CONFIG['freshness']['max_move_pct']
 
 
-def make_short(kind, hist, args, stamp, exclude):
+def make_short(kind, hist, args, stamp, exclude, avoid_formats=()):
     for attempt in range(2):
         vid = f'crypto_{stamp}_{kind}' + (f'_r{attempt}' if attempt else '')
-        data, sc, mp4 = produce_short(kind, hist, vid, args, exclude)
+        data, sc, mp4 = produce_short(kind, hist, vid, args, exclude, avoid_formats)
         if args.data or args.coin or fresh(data):
             return data, sc, mp4
         gh_annotation('warning', f"{data['coin']['symbol']} moved more than {CONFIG['freshness']['max_move_pct']}% "
@@ -359,10 +359,11 @@ def main():
 
     stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H%M')
     gap = CONFIG['pair_gap_minutes'] * 60
-    failed, last_upload, used = False, None, []
+    failed, last_upload, used, used_formats = False, None, [], []
     for kind in kinds:
         try:
-            data, sc, mp4 = make_short(kind, hist, args, stamp, used)
+            data, sc, mp4 = make_short(kind, hist, args, stamp, used, used_formats)
+            used_formats.append(sc['format'])
         except SystemExit:
             raise
         except Exception as e:

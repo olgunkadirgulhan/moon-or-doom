@@ -335,9 +335,11 @@ def segment_template(data, rnd, label, long_title):
     return {'lines': L}
 
 
-def pick_format(hist, rnd, data):
+def pick_format(hist, rnd, data, avoid=()):
+    """Son 2 videonun ve bu çalıştırmada kullanılanların formatı tekrarlanmaz."""
     recent = [v.get('format') for v in hist.get('videos', []) if v.get('kind') in ('gainer', 'loser')][-2:]
-    options = [f for f in SHORT_FORMATS if f not in recent]
+    options = [f for f in SHORT_FORMATS if f not in recent and f not in avoid] or \
+              [f for f in SHORT_FORMATS if f not in avoid]
     if not (data.get('info') or {}).get('categories') and not (data.get('info') or {}).get('description'):
         options = [f for f in options if f != 'what_is'] or ['levels']
     return rnd.choice(options)
