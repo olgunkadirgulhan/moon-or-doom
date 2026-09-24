@@ -29,6 +29,40 @@
       "privacy": "public",
       "title": "MARSCOIN -18.5% today — key levels to watch 📊",
       "date": "2026-09-24 17:11"
+    },
+    {
+      "id": "crypto_2026-09-24_2022_gainer",
+      "coin": "plasma",
+      "symbol": "XPL",
+      "price": 0.1071,
+      "change_24h_pct": 21.2,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "shigi4XxnvQ",
+      "privacy": "public",
+      "title": "XPL key levels: resistance $0.1125, support $0.09524 📊",
+      "date": "2026-09-24 20:24"
+    },
+    {
+      "id": "crypto_2026-09-24_2022_loser",
+      "coin": "grass",
+      "symbol": "GRASS",
+      "price": 0.444346,
+      "change_24h_pct": -2.9,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "wYQNp-tV4LY",
+      "privacy": "public",
+      "title": "Bear Betty vs GRASS -2.9% 😂",
+      "date": "2026-09-24 20:29"
     }
   ]
 }
