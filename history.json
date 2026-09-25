@@ -113,6 +113,40 @@
       "privacy": "public",
       "title": "LIT -9.9%… Bear Betty called it 💀",
       "date": "2026-09-25 20:55"
+    },
+    {
+      "id": "crypto_2026-09-25_2339_gainer",
+      "coin": "ark",
+      "symbol": "ARK",
+      "price": 0.255437,
+      "change_24h_pct": 31.9,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "trend",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "5ps5h5wv-Dk",
+      "privacy": "public",
+      "title": "Moon Max lost it when ARK went +31.9% 😭",
+      "date": "2026-09-25 23:41"
+    },
+    {
+      "id": "crypto_2026-09-25_2339_loser",
+      "coin": "mina-protocol",
+      "symbol": "MINA",
+      "price": 0.140503,
+      "change_24h_pct": -3.4,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "AizQ0vY1GeM",
+      "privacy": "public",
+      "title": "Bear Betty saw MINA -3.4% and smiled 😈",
+      "date": "2026-09-25 23:46"
     }
   ]
 }
