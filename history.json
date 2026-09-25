@@ -79,6 +79,40 @@
       "format": "long",
       "concept": "sr",
       "date": "2026-09-25 18:03"
+    },
+    {
+      "id": "crypto_2026-09-25_2047_gainer",
+      "coin": "pha",
+      "symbol": "PHA",
+      "price": 0.081429,
+      "change_24h_pct": 61.7,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "bv6xZjc88D4",
+      "privacy": "public",
+      "title": "PHALA (PHA) +61.7% today — what even is it? 🤔",
+      "date": "2026-09-25 20:50"
+    },
+    {
+      "id": "crypto_2026-09-25_2047_loser",
+      "coin": "lighter",
+      "symbol": "LIT",
+      "price": 4.79,
+      "change_24h_pct": -9.9,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "DA1uHs5w2Dg",
+      "privacy": "public",
+      "title": "LIT -9.9%… Bear Betty called it 💀",
+      "date": "2026-09-25 20:55"
     }
   ]
 }
