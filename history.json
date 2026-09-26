@@ -147,6 +147,40 @@
       "privacy": "public",
       "title": "Bear Betty saw MINA -3.4% and smiled 😈",
       "date": "2026-09-25 23:46"
+    },
+    {
+      "id": "crypto_2026-09-26_1254_gainer",
+      "coin": "amp-token",
+      "symbol": "AMP",
+      "price": 0.00068813,
+      "change_24h_pct": 34.9,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "Hxac0-yVV14",
+      "privacy": "public",
+      "title": "AMP +34.9% today — support & resistance levels 📊",
+      "date": "2026-09-26 12:56"
+    },
+    {
+      "id": "crypto_2026-09-26_1254_loser",
+      "coin": "injective-protocol",
+      "symbol": "INJ",
+      "price": 7.75,
+      "change_24h_pct": -6.0,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "WwXGmzceXWo",
+      "privacy": "public",
+      "title": "INJ -6.0%… Bear Betty called it 💀",
+      "date": "2026-09-26 13:01"
     }
   ]
 }
