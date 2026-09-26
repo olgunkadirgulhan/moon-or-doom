@@ -181,6 +181,40 @@
       "privacy": "public",
       "title": "INJ -6.0%… Bear Betty called it 💀",
       "date": "2026-09-26 13:01"
+    },
+    {
+      "id": "crypto_2026-09-26_1954_gainer",
+      "coin": "kamino",
+      "symbol": "KMNO",
+      "price": 0.050282,
+      "change_24h_pct": 21.8,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "volume",
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "1uYAYbgBavQ",
+      "privacy": "public",
+      "title": "KMNO +21.8% today and Moon Max is NOT okay 🚀",
+      "date": "2026-09-26 19:56"
+    },
+    {
+      "id": "crypto_2026-09-26_1954_loser",
+      "coin": "near",
+      "symbol": "NEAR",
+      "price": 4.83,
+      "change_24h_pct": -5.4,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "jtU52230rZE",
+      "privacy": "public",
+      "title": "NEAR key levels: resistance $5.21, support $4.80 📊",
+      "date": "2026-09-26 20:01"
     }
   ]
 }
