@@ -249,6 +249,40 @@
       "privacy": "public",
       "title": "ZAMA -10.1%… Bear Betty called it 💀",
       "date": "2026-09-27 17:01"
+    },
+    {
+      "id": "crypto_2026-09-27_2054_gainer",
+      "coin": "the-graph",
+      "symbol": "GRT",
+      "price": 0.0318259,
+      "change_24h_pct": 16.3,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "l-PF9eWxPdU",
+      "privacy": "public",
+      "title": "GRT +16.3% today and Moon Max is NOT okay 🚀",
+      "date": "2026-09-27 20:56"
+    },
+    {
+      "id": "crypto_2026-09-27_2054_loser",
+      "coin": "lisk",
+      "symbol": "LSK",
+      "price": 0.31922,
+      "change_24h_pct": -12.3,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "Oix48UHMUUc",
+      "privacy": "public",
+      "title": "Bear Betty vs LSK -12.3% 😂",
+      "date": "2026-09-27 21:01"
     }
   ]
 }
