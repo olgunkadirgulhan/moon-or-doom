@@ -283,6 +283,40 @@
       "privacy": "public",
       "title": "Bear Betty vs LSK -12.3% 😂",
       "date": "2026-09-27 21:01"
+    },
+    {
+      "id": "crypto_2026-09-28_1654_gainer",
+      "coin": "hedera-hashgraph",
+      "symbol": "HBAR",
+      "price": 0.127641,
+      "change_24h_pct": 36.4,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "iK8B2Or156Q",
+      "privacy": "public",
+      "title": "Moon Max lost it when HBAR went +36.4% 😭",
+      "date": "2026-09-28 16:56"
+    },
+    {
+      "id": "crypto_2026-09-28_1654_loser",
+      "coin": "arweave",
+      "symbol": "AR",
+      "price": 4.28,
+      "change_24h_pct": -12.6,
+      "kind": "loser",
+      "format": "school",
+      "concept": "candles",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "yNv1wkJprlg",
+      "privacy": "public",
+      "title": "AR -12.6%… Bear Betty called it 💀",
+      "date": "2026-09-28 17:11"
     }
   ]
 }
