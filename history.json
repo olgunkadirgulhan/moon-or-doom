@@ -317,6 +317,40 @@
       "privacy": "public",
       "title": "AR -12.6%… Bear Betty called it 💀",
       "date": "2026-09-28 17:11"
+    },
+    {
+      "id": "crypto_2026-09-28_2054_gainer",
+      "coin": "collector-crypt",
+      "symbol": "CARDS",
+      "price": 0.243048,
+      "change_24h_pct": 18.6,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "OfFYYZK5T10",
+      "privacy": "public",
+      "title": "CARDS key levels: resistance $0.2568, support $0.2247 📊",
+      "date": "2026-09-28 20:56"
+    },
+    {
+      "id": "crypto_2026-09-28_2054_loser",
+      "coin": "zencash",
+      "symbol": "ZEN",
+      "price": 6.84,
+      "change_24h_pct": -12.9,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "nnicTDQlMtQ",
+      "privacy": "public",
+      "title": "ZEN -12.9%… Bear Betty called it 💀",
+      "date": "2026-09-28 21:01"
     }
   ]
 }
