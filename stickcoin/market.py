@@ -43,17 +43,68 @@ def trending_ids():
     return [c['item']['id'] for c in cg('/search/trending').get('coins', [])]
 
 
+def _forbidden(e):
+    return isinstance(e, requests.HTTPError) and e.response is not None and e.response.status_code == 403
+
+
+# 09-29'dan beri anahtarsız CoinGecko /coins/markets ve /simple/price'a 403 veriyor; /search/trending,
+# /coins/list ve /coins/{id} hâlâ açık. Piyasa satırları CoinPaprika'dan (anahtarsız) gelir, CoinGecko
+# id'lerine eşlenir; böylece trend listesi, geçmiş ve coin_info aynı id'lerle çalışmaya devam eder.
+PAPRIKA = 'https://api.coinpaprika.com/v1'
+_paprika = None
+
+
+def _norm(s):
+    return re.sub(r'[^a-z0-9]', '', (s or '').lower())
+
+
+def paprika_markets():
+    global _paprika
+    if _paprika is None:
+        r = requests.get(PAPRIKA + '/tickers', headers=UA, timeout=60)
+        r.raise_for_status()
+        by_sym = {}
+        for c in cg('/coins/list'):
+            by_sym.setdefault(c['symbol'].lower(), []).append(c)
+        used, rows = set(), []
+        for t in sorted(r.json(), key=lambda t: t.get('rank') or 10 ** 9):
+            q = (t.get('quotes') or {}).get('USD')
+            cands = by_sym.get(t['symbol'].lower(), [])
+            slug = t['id'].split('-', 1)[-1]
+            match = next((c for c in cands if _norm(c['name']) == _norm(t['name'])), None) \
+                or next((c for c in cands if c['id'] == slug), None) \
+                or (cands[0] if len(cands) == 1 else None)
+            if not q or not match or match['id'] in used:
+                continue
+            used.add(match['id'])
+            rows.append({'id': match['id'], 'symbol': t['symbol'].lower(), 'name': t['name'],
+                         'image': None,  # logo() CoinGecko'dan tamamlar
+                         'current_price': q.get('price'), 'market_cap': q.get('market_cap'),
+                         'market_cap_rank': t.get('rank'), 'total_volume': q.get('volume_24h'),
+                         'price_change_percentage_24h': q.get('percent_change_24h'),
+                         'price_change_percentage_7d_in_currency': q.get('percent_change_7d')})
+        _paprika = rows
+    return _paprika
+
+
 def markets(ids=None, pages=1):
     rows = []
-    for page in range(1, pages + 1):
-        params = dict(vs_currency='usd', order='market_cap_desc', per_page=250, page=page,
-                      price_change_percentage='24h,7d')
-        if ids:
-            params['ids'] = ','.join(ids)
-        rows += cg('/coins/markets', **params)
-        if ids:
-            break
-    return rows
+    try:
+        for page in range(1, pages + 1):
+            params = dict(vs_currency='usd', order='market_cap_desc', per_page=250, page=page,
+                          price_change_percentage='24h,7d')
+            if ids:
+                params['ids'] = ','.join(ids)
+            rows += cg('/coins/markets', **params)
+            if ids:
+                break
+        return rows
+    except (requests.HTTPError, RuntimeError) as e:
+        if isinstance(e, requests.HTTPError) and not _forbidden(e):
+            raise
+        log(f'CoinGecko markets unavailable ({e.__class__.__name__}), using CoinPaprika')
+        rows = paprika_markets()
+        return [m for m in rows if m['id'] in ids] if ids else rows[:250 * pages]
 
 
 def eligible(m):
@@ -122,7 +173,14 @@ def mentioned(m, titles):
 
 
 def price_now(coin_id):
-    return float(cg('/simple/price', ids=coin_id, vs_currencies='usd')[coin_id]['usd'])
+    try:
+        return float(cg('/simple/price', ids=coin_id, vs_currencies='usd')[coin_id]['usd'])
+    except requests.HTTPError as e:
+        if not _forbidden(e):
+            raise
+        d = cg(f'/coins/{coin_id}', localization='false', tickers='false', community_data='false',
+               developer_data='false', sparkline='false')
+        return float(d['market_data']['current_price']['usd'])
 
 
 # ------------------------------------------------------------------ mumlar
@@ -191,6 +249,13 @@ def logo(coin):
     if path.exists():
         return path
     url = (coin.get('image') or '').replace('/small/', '/large/').replace('/thumb/', '/large/')
+    if not url:  # CoinPaprika satırı: görseli CoinGecko coin sayfasından al
+        try:
+            d = cg(f"/coins/{coin['id']}", localization='false', tickers='false', market_data='false',
+                   community_data='false', developer_data='false', sparkline='false')
+            url = (d.get('image') or {}).get('large') or ''
+        except Exception as e:
+            log(f'logo lookup failed for {coin["id"]}: {e}')
     if not url:
         return None
     try:
