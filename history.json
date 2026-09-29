@@ -368,6 +368,40 @@
       "format": "long",
       "concept": null,
       "date": "2026-09-29 17:56"
+    },
+    {
+      "id": "crypto_2026-09-29_1854_gainer",
+      "coin": "zero-gravity",
+      "symbol": "0G",
+      "price": 0.3323434320018772,
+      "change_24h_pct": 28.5,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "DeJYqj0FkZI",
+      "privacy": "public",
+      "title": "What is 0G? 0G is one of today's top gainers (+28.5%) 🤔",
+      "date": "2026-09-29 18:55"
+    },
+    {
+      "id": "crypto_2026-09-29_1854_loser",
+      "coin": "hedera-hashgraph",
+      "symbol": "HBAR",
+      "price": 0.10532123632766589,
+      "change_24h_pct": -16.0,
+      "kind": "loser",
+      "format": "school",
+      "concept": "rsi",
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "qdgDtJeEXo0",
+      "privacy": "public",
+      "title": "HBAR -16.0%… Bear Betty called it 💀",
+      "date": "2026-09-29 19:00"
     }
   ]
 }
