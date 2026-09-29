@@ -436,6 +436,23 @@
       "privacy": "public",
       "title": "Bear Betty saw MON -6.8% and smiled 😈",
       "date": "2026-09-29 20:01"
+    },
+    {
+      "id": "crypto_2026-09-29_2054_gainer",
+      "coin": "pump-fun",
+      "symbol": "PUMP",
+      "price": 0.005927983889785482,
+      "change_24h_pct": 19.5,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "trend",
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "XkILTTcbVw8",
+      "privacy": "public",
+      "title": "Moon Max lost it when PUMP went +19.5% 😭",
+      "date": "2026-09-29 20:56"
     }
   ]
 }
