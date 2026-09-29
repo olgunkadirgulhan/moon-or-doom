@@ -1,6 +1,6 @@
 # Çöp Adam Kripto — ayarlar (tasarım: cizgi-kripto-yorum-kanali.md)
 
-daily_videos: 4            # günlük Shorts üst sınırı: 2 çalıştırma x (en çok yükselen + en çok düşen)
+daily_videos: 5            # günlük Shorts üst sınırı: 16:00 ve 18:00 slotu 2'şer (yükselen + düşen), 20:30 slotu 1
 pair_gap_minutes: 5        # aynı çalıştırmadaki iki video arası
 universe_pages: 2          # CoinGecko piyasa değerine göre ilk 500 coin içinden yükselen/düşen
 

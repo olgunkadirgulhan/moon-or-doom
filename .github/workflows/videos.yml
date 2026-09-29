@@ -1,9 +1,9 @@
 name: videos
 on:
   schedule:
-    # Shorts: günde 2 slot x (en çok yükselen + en çok düşen, 5 dk arayla) = 4 video.
-    # Slotlar 16:00 ve 20:30 UTC (ET 12:00 ve 16:30 · TR 19:00 ve 23:30): 09-24..26 verisinde
-    # ET öğle/öğleden sonra en iyisiydi, 08:35 ET sabah slotu kaldırıldı.
+    # Shorts: günde 5 video. Slotlar 16:00, 18:00, 20:30 UTC (ET 12:00, 14:00, 16:30 · TR 19:00, 21:00, 23:30),
+    # her slot 2 video (en çok yükselen + en çok düşen, 5 dk arayla); DAILY_MAX=5 tavanı yüzünden
+    # 20:30 slotu 1 video yapar. 09-24..26 verisinde ET öğle/öğleden sonra en iyisiydi, 08:35 ET sabah slotu kaldırıldı.
     # Uzun video (16:9) 15:00 UTC (TR 18:00): Salı 'explained' (trend 3 proje ne?), Cuma 'school' (Chart School dersi).
     # Pazar/Çarşamba haftalık özet Whale Market Pulse'ta; aynı günleri ve konuyu kullanmıyoruz.
     # GitHub cron'u geciktiriyor/düşürüyor: saatlik tetiklenir, .github/slot_guard.py sadece
@@ -53,8 +53,9 @@ jobs:
       - id: g
         env:
           LOG_FILE: history.json
-          SLOTS: "16:00,20:30"
+          SLOTS: "16:00,18:00,20:30"
           PER_SLOT: "2"
+          DAILY_MAX: "5"  # config.yaml daily_videos ile aynı tutulmalı
           SHORT_KINDS: "gainer,loser,manual"
           SHORT_MODE: shorts
           LONG: "tue 15:00 explained,fri 15:00 school"
