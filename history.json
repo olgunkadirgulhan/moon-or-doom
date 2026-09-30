@@ -521,6 +521,23 @@
       "privacy": "public",
       "title": "What is Lighter? LIT is one of today's biggest losers (-13.7%) 🤔",
       "date": "2026-09-30 19:01"
+    },
+    {
+      "id": "crypto_2026-09-30_2054_gainer",
+      "coin": "redstone-oracles",
+      "symbol": "RED",
+      "price": 0.176602,
+      "change_24h_pct": 9.4,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "266M98x4PRA",
+      "privacy": "public",
+      "title": "Moon Max lost it when RED went +9.4% 😭",
+      "date": "2026-09-30 20:55"
     }
   ]
 }
