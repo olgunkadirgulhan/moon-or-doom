@@ -453,6 +453,40 @@
       "privacy": "public",
       "title": "Moon Max lost it when PUMP went +19.5% 😭",
       "date": "2026-09-29 20:56"
+    },
+    {
+      "id": "crypto_2026-09-30_1654_gainer",
+      "coin": "berachain-bera",
+      "symbol": "BERA",
+      "price": 0.262735,
+      "change_24h_pct": 18.2,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "2wInuuc3Vs0",
+      "privacy": "public",
+      "title": "Berachain (BERA) +18.2% today — what even is it? 🤔",
+      "date": "2026-09-30 16:56"
+    },
+    {
+      "id": "crypto_2026-09-30_1654_loser",
+      "coin": "collector-crypt",
+      "symbol": "CARDS",
+      "price": 0.189172,
+      "change_24h_pct": -14.8,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "QyKPqLvc-YE",
+      "privacy": "public",
+      "title": "When CARDS dumps 14.8% in a day 😂",
+      "date": "2026-09-30 17:01"
     }
   ]
 }
