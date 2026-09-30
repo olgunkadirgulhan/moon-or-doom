@@ -487,6 +487,40 @@
       "privacy": "public",
       "title": "When CARDS dumps 14.8% in a day 😂",
       "date": "2026-09-30 17:01"
+    },
+    {
+      "id": "crypto_2026-09-30_1854_gainer",
+      "coin": "prometeus",
+      "symbol": "PROM",
+      "price": 6.54,
+      "change_24h_pct": 10.7,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "volume",
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "337EqX5KAoQ",
+      "privacy": "public",
+      "title": "PROM +10.7% today and Moon Max is NOT okay 🚀",
+      "date": "2026-09-30 18:56"
+    },
+    {
+      "id": "crypto_2026-09-30_1854_loser",
+      "coin": "lighter",
+      "symbol": "LIT",
+      "price": 3.91,
+      "change_24h_pct": -13.7,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "kMsr3XcFY1w",
+      "privacy": "public",
+      "title": "What is Lighter? LIT is one of today's biggest losers (-13.7%) 🤔",
+      "date": "2026-09-30 19:01"
     }
   ]
 }
