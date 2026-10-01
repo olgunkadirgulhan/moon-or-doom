@@ -572,6 +572,40 @@
       "privacy": "public",
       "title": "2Z -13.1%… Bear Betty called it 💀",
       "date": "2026-10-01 17:00"
+    },
+    {
+      "id": "crypto_2026-10-01_1905_gainer",
+      "coin": "megaeth",
+      "symbol": "MEGA",
+      "price": 0.054668,
+      "change_24h_pct": 30.8,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "kiHD9tbYK7k",
+      "privacy": "public",
+      "title": "Moon Max vs MEGA +30.8% 😂",
+      "date": "2026-10-01 19:07"
+    },
+    {
+      "id": "crypto_2026-10-01_1905_loser",
+      "coin": "near",
+      "symbol": "NEAR",
+      "price": 4.87,
+      "change_24h_pct": -9.6,
+      "kind": "loser",
+      "format": "school",
+      "concept": "candles",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "rcuMrgT8-pU",
+      "privacy": "public",
+      "title": "Chart School: How to read candlesticks — NEAR example 📚",
+      "date": "2026-10-01 19:12"
     }
   ]
 }
