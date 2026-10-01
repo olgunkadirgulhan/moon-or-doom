@@ -606,6 +606,23 @@
       "privacy": "public",
       "title": "Chart School: How to read candlesticks — NEAR example 📚",
       "date": "2026-10-01 19:12"
+    },
+    {
+      "id": "crypto_2026-10-01_2036_gainer",
+      "coin": "superfarm",
+      "symbol": "SUPER",
+      "price": 0.222039,
+      "change_24h_pct": 12.3,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "k97a8_mj7ms",
+      "privacy": "public",
+      "title": "SUPER +12.3% today — support & resistance levels 📊",
+      "date": "2026-10-01 20:38"
     }
   ]
 }
