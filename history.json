@@ -538,6 +538,40 @@
       "privacy": "public",
       "title": "Moon Max lost it when RED went +9.4% 😭",
       "date": "2026-09-30 20:55"
+    },
+    {
+      "id": "crypto_2026-10-01_1654_gainer",
+      "coin": "jasmycoin",
+      "symbol": "JASMY",
+      "price": 0.00574003,
+      "change_24h_pct": 11.7,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "yIPh9QD2mo0",
+      "privacy": "public",
+      "title": "Moon Max lost it when JASMY went +11.7% 😭",
+      "date": "2026-10-01 16:55"
+    },
+    {
+      "id": "crypto_2026-10-01_1654_loser",
+      "coin": "doublezero",
+      "symbol": "2Z",
+      "price": 0.055439,
+      "change_24h_pct": -13.1,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "4q37kWFjtck",
+      "privacy": "public",
+      "title": "2Z -13.1%… Bear Betty called it 💀",
+      "date": "2026-10-01 17:00"
     }
   ]
 }
