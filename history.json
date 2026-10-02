@@ -673,6 +673,40 @@
       "privacy": "public",
       "title": "STX -5.3%… Bear Betty called it 💀",
       "date": "2026-10-02 17:01"
+    },
+    {
+      "id": "crypto_2026-10-02_1854_gainer",
+      "coin": "the-sandbox",
+      "symbol": "SAND",
+      "price": 0.061306,
+      "change_24h_pct": 37.4,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "zbNnm1qcrPo",
+      "privacy": "public",
+      "title": "SAND +37.4% today and Moon Max is NOT okay 🚀",
+      "date": "2026-10-02 18:56"
+    },
+    {
+      "id": "crypto_2026-10-02_1854_loser",
+      "coin": "doublezero",
+      "symbol": "2Z",
+      "price": 0.04612192,
+      "change_24h_pct": -18.2,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "DSaGzx0IBnE",
+      "privacy": "public",
+      "title": "What is DoubleZero? 2Z is one of today's biggest losers (-18.2%) 🤔",
+      "date": "2026-10-02 19:01"
     }
   ]
 }
