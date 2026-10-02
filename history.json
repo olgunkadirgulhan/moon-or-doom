@@ -623,6 +623,22 @@
       "privacy": "public",
       "title": "SUPER +12.3% today — support & resistance levels 📊",
       "date": "2026-10-01 20:38"
+    },
+    {
+      "id": "long_school_2026-10-02_1554",
+      "kind": "school",
+      "coins": [
+        "bitcoin",
+        "the-sandbox",
+        "collector-crypt",
+        "midnight-3"
+      ],
+      "video_id": "iHKbydUISZU",
+      "privacy": "public",
+      "title": "Moving Averages Explained With Cartoons | BTC, SAND, CARDS & NIGHT Examples",
+      "format": "long",
+      "concept": "trend",
+      "date": "2026-10-02 16:06"
     }
   ]
 }
