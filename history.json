@@ -639,6 +639,40 @@
       "format": "long",
       "concept": "trend",
       "date": "2026-10-02 16:06"
+    },
+    {
+      "id": "crypto_2026-10-02_1654_gainer",
+      "coin": "collector-crypt",
+      "symbol": "CARDS",
+      "price": 0.280449,
+      "change_24h_pct": 46.0,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "GETE3oPtOYs",
+      "privacy": "public",
+      "title": "Collector Crypt (CARDS) +46.0% today — what even is it? 🤔",
+      "date": "2026-10-02 16:56"
+    },
+    {
+      "id": "crypto_2026-10-02_1654_loser",
+      "coin": "blockstack",
+      "symbol": "STX",
+      "price": 0.363559,
+      "change_24h_pct": -5.3,
+      "kind": "loser",
+      "format": "school",
+      "concept": "sr",
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "alwcOCPGrm0",
+      "privacy": "public",
+      "title": "STX -5.3%… Bear Betty called it 💀",
+      "date": "2026-10-02 17:01"
     }
   ]
 }
