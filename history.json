@@ -707,6 +707,23 @@
       "privacy": "public",
       "title": "What is DoubleZero? 2Z is one of today's biggest losers (-18.2%) 🤔",
       "date": "2026-10-02 19:01"
+    },
+    {
+      "id": "crypto_2026-10-02_2054_gainer",
+      "coin": "aethir",
+      "symbol": "ATH",
+      "price": 0.00652436,
+      "change_24h_pct": 10.9,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "T1_-3VxvqUo",
+      "privacy": "public",
+      "title": "ATH +10.9% today — support & resistance levels 📊",
+      "date": "2026-10-02 20:57"
     }
   ]
 }
