@@ -792,6 +792,23 @@
       "privacy": "public",
       "title": "PHA key levels: resistance $0.07710, support $0.06650 📊",
       "date": "2026-10-03 18:57"
+    },
+    {
+      "id": "crypto_2026-10-03_2054_gainer",
+      "coin": "pump-fun",
+      "symbol": "PUMP",
+      "price": 0.0062668,
+      "change_24h_pct": 18.5,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "rsi",
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "PiE7hlVDozE",
+      "privacy": "public",
+      "title": "What is RSI? Explained with PUMP (+18.5% today) 📚",
+      "date": "2026-10-03 20:56"
     }
   ]
 }
