@@ -724,6 +724,40 @@
       "privacy": "public",
       "title": "ATH +10.9% today — support & resistance levels 📊",
       "date": "2026-10-02 20:57"
+    },
+    {
+      "id": "crypto_2026-10-03_1654_gainer",
+      "coin": "superfarm",
+      "symbol": "SUPER",
+      "price": 0.260158,
+      "change_24h_pct": 13.2,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "o_Q27C0aTQU",
+      "privacy": "public",
+      "title": "Moon Max lost it when SUPER went +13.2% 😭",
+      "date": "2026-10-03 16:55"
+    },
+    {
+      "id": "crypto_2026-10-03_1654_loser",
+      "coin": "niu-lai",
+      "symbol": "牛来",
+      "price": 0.080895,
+      "change_24h_pct": -17.0,
+      "kind": "loser",
+      "format": "school",
+      "concept": "volume",
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "hzei8Kz3MAk",
+      "privacy": "public",
+      "title": "牛来 -17.0%… Bear Betty called it 💀",
+      "date": "2026-10-03 17:00"
     }
   ]
 }
