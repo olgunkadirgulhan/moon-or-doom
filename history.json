@@ -758,6 +758,40 @@
       "privacy": "public",
       "title": "牛来 -17.0%… Bear Betty called it 💀",
       "date": "2026-10-03 17:00"
+    },
+    {
+      "id": "crypto_2026-10-03_1851_gainer",
+      "coin": "starknet",
+      "symbol": "STRK",
+      "price": 0.051704,
+      "change_24h_pct": 23.9,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "39wkmUTZkBk",
+      "privacy": "public",
+      "title": "STRK +23.9% today and Moon Max is NOT okay 🚀",
+      "date": "2026-10-03 18:52"
+    },
+    {
+      "id": "crypto_2026-10-03_1851_loser",
+      "coin": "pha",
+      "symbol": "PHA",
+      "price": 0.069152,
+      "change_24h_pct": -4.5,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "m54RnxOBOBU",
+      "privacy": "public",
+      "title": "PHA key levels: resistance $0.07710, support $0.06650 📊",
+      "date": "2026-10-03 18:57"
     }
   ]
 }
