@@ -877,6 +877,23 @@
       "privacy": "public",
       "title": "Bear Betty saw KITE -4.6% and smiled 😈",
       "date": "2026-10-04 18:56"
+    },
+    {
+      "id": "crypto_2026-10-04_2054_gainer",
+      "coin": "axie-infinity",
+      "symbol": "AXS",
+      "price": 1.37,
+      "change_24h_pct": 13.4,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "eGMIB31BZSY",
+      "privacy": "public",
+      "title": "Moon Max lost it when AXS went +13.4% 😭",
+      "date": "2026-10-04 20:55"
     }
   ]
 }
