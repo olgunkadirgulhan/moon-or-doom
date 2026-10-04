@@ -809,6 +809,40 @@
       "privacy": "public",
       "title": "What is RSI? Explained with PUMP (+18.5% today) 📚",
       "date": "2026-10-03 20:56"
+    },
+    {
+      "id": "crypto_2026-10-04_1654_gainer",
+      "coin": "mubarak",
+      "symbol": "MUBARAK",
+      "price": 0.073977,
+      "change_24h_pct": 19.1,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "Xr0Ah9viqkM",
+      "privacy": "public",
+      "title": "Moon Max vs MUBARAK +19.1% 😂",
+      "date": "2026-10-04 16:56"
+    },
+    {
+      "id": "crypto_2026-10-04_1654_loser",
+      "coin": "tellor",
+      "symbol": "TRB",
+      "price": 19.99,
+      "change_24h_pct": -4.8,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "OhQQtrkCt_c",
+      "privacy": "public",
+      "title": "Bear Betty saw TRB -4.8% and smiled 😈",
+      "date": "2026-10-04 17:01"
     }
   ]
 }
