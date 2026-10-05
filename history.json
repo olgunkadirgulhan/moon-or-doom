@@ -894,6 +894,40 @@
       "privacy": "public",
       "title": "Moon Max lost it when AXS went +13.4% 😭",
       "date": "2026-10-04 20:55"
+    },
+    {
+      "id": "crypto_2026-10-05_1654_gainer",
+      "coin": "instadapp",
+      "symbol": "FLUID",
+      "price": 2.16,
+      "change_24h_pct": 23.3,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "KmUqlbwQyu4",
+      "privacy": "public",
+      "title": "Moon Max vs Bear Betty: FLUID +23.3% 🥊",
+      "date": "2026-10-05 17:00"
+    },
+    {
+      "id": "crypto_2026-10-05_1654_loser",
+      "coin": "monad",
+      "symbol": "MON",
+      "price": 0.03108144,
+      "change_24h_pct": -7.0,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "kd1fedTnAjE",
+      "privacy": "public",
+      "title": "Monad dropped 7.0%. Where's the floor? 📉",
+      "date": "2026-10-05 17:06"
     }
   ]
 }
