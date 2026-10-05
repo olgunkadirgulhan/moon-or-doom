@@ -58,7 +58,8 @@ jobs:
           DAILY_MAX: "5"  # config.yaml daily_videos ile aynı tutulmalı
           SHORT_KINDS: "gainer,loser,manual"
           SHORT_MODE: shorts
-          LONG: "tue 15:00 explained,fri 15:00 school"
+          # uzun videolar ilk 2 haftada 5-7 izlenme: haftada 2 -> 1
+          LONG: "fri 15:00 school"
         run: python3 .github/slot_guard.py
 
   make:

@@ -25,6 +25,7 @@ import argparse
 import json
 import os
 import random
+import re
 import sys
 import time
 import traceback
@@ -88,7 +89,12 @@ FOOTER = ('Levels calculated from 4H chart data. Educational entertainment only 
           'Crypto is highly volatile; do your own research.\n\n')
 
 
-def metadata(data, sc, rnd):
+def title_shape(t):
+    """Başlığın kalıbı (sembol ve sayılar atılır): aynı kalıp üst üste = tekrarlayan içerik sinyali."""
+    return re.sub(r'[A-Z]{2,6}|[\d.,$+%\-−]+', 'X', t or '').strip()
+
+
+def metadata(data, sc, rnd, recent_titles=()):
     sym, name = data['coin']['symbol'], data['coin']['name']
     chg = data['change_24h_pct']
     p = words.price_text
@@ -117,9 +123,16 @@ def metadata(data, sc, rnd):
         intro = f"{name} ({sym}) is {role} at {p(data['price'])}. Chart Charlie maps the support and resistance."
     # karakter tepkili başlıklar (Dex & Friends'te en iyi çalışan stil: duygu + emoji)
     if chg >= 0:
-        titles += [f"Moon Max lost it when {sym} went {signed(chg)} 😭", f"{sym} {signed(chg)} today and Moon Max is NOT okay 🚀"]
+        titles += [f"Moon Max lost it when {sym} went {signed(chg)} 😭", f"{sym} {signed(chg)} today and Moon Max is NOT okay 🚀",
+                   f"{name} pumped {signed(chg)}. Moon Max has questions 🤔", f"{sym} {signed(chg)} in 24h: where's the next wall? 🧱",
+                   f"Moon Max vs Bear Betty: {sym} {signed(chg)} 🥊", f"{sym} just ran {signed(chg)}. Chart Charlie checks the levels 📈"]
     else:
-        titles += [f"Bear Betty saw {sym} {signed(chg)} and smiled 😈", f"{sym} {signed(chg)}… Bear Betty called it 💀"]
+        titles += [f"Bear Betty saw {sym} {signed(chg)} and smiled 😈", f"{sym} {signed(chg)}… Bear Betty called it 💀",
+                   f"{name} dropped {abs(chg):.1f}%. Where's the floor? 📉", f"{sym} {signed(chg)} in 24h: the support to watch 👀",
+                   f"Moon Max is coping hard: {sym} {signed(chg)} 🫠", f"{sym} {signed(chg)}. Chart Charlie draws the line 📏"]
+    # son 12 videoda kullanılmış başlık kalıbı seçilmez
+    used = {title_shape(t) for t in recent_titles}
+    titles = [t for t in titles if title_shape(t) not in used] or titles
     desc = (intro + '\n\n' + '\n'.join(levels_block(data)) + '\n\n' + FOOTER +
             "Moon or Doom: today's top gainer & top loser, every day. Subscribe so you never miss the levels.\n"
             f"#crypto #{sym.lower()} #MoonOrDoom #shorts")
@@ -458,7 +471,7 @@ def main():
 
     stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d_%H%M')
     gap = CONFIG['pair_gap_minutes'] * 60
-    failed, last_upload, used, used_formats = False, None, [], []
+    failed, last_upload, used, used_formats, used_titles = False, None, [], [], []
     for kind in kinds:
         try:
             data, sc, mp4 = make_short(kind, hist, args, stamp, used, used_formats)
@@ -468,7 +481,9 @@ def main():
         except Exception as e:
             traceback.print_exc(); gh_annotation('error', f'{kind} video failed: {e}'); failed = True; continue
         used.append(data['coin']['id'])
-        title, desc, tags = metadata(data, sc, random.Random(data['id']))
+        title, desc, tags = metadata(data, sc, random.Random(data['id']),
+                                     [v.get('title') for v in hist['videos'][-12:]] + used_titles)
+        used_titles.append(title)
         (OUT / data['id'] / 'meta.json').write_text(json.dumps({'title': title, 'description': desc, 'tags': tags},
                                                                indent=2, ensure_ascii=False), encoding='utf-8')
         log(f'title: {title}')
