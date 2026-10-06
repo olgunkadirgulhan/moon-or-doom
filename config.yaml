@@ -5,8 +5,8 @@ pair_gap_minutes: 5        # aynı çalıştırmadaki iki video arası
 universe_pages: 2          # CoinGecko piyasa değerine göre ilk 500 coin içinden yükselen/düşen
 
 filters:                   # Bölüm 5: mikro coin / stablecoin koruması
-  min_market_cap: 50000000
-  min_volume_24h: 10000000
+  min_market_cap: 100000000  # 2026-10-06: 50M -> 100M (spekülatif mikro coin riskini azaltmak için)
+  min_volume_24h: 15000000
   exclude_symbols: [usdt, usdc, dai, fdusd, tusd, usde, usds, pyusd, usdd, busd, frax, lusd, gusd, usdp, eurc, eurt,
                     usd1, rlusd, usdtb, susde, susds, wbtc, weth, steth, wsteth, weeth, cbbtc, cbeth, reth, wbeth,
                     rseth, ezeth, meth, lbtc, solvbtc, jitosol, msol, bnsol, wbnb, wtrx, btcb, bsc-usd, xaut, paxg]
