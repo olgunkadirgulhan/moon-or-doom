@@ -55,7 +55,7 @@ jobs:
           LOG_FILE: history.json
           SLOTS: "16:00,18:00,20:30"
           PER_SLOT: "1"
-          DAILY_MAX: "5"  # config.yaml daily_videos ile aynı tutulmalı
+          DAILY_MAX: "3"  # config.yaml daily_videos ile aynı tutulmalı
           SHORT_KINDS: "gainer,loser,manual"
           SHORT_MODE: shorts
           # uzun videolar ilk 2 haftada 5-7 izlenme: haftada 2 -> 1
