@@ -439,6 +439,23 @@ def run_long(kind, args, mode, hist):
     notify.message(f'✅ {title}\n{url} ({mode})')
 
 
+def social_captions(title, data):
+    """TikTok / Instagram açıklamaları. Finans içeriği: her ikisinde de 'yatırım tavsiyesi değildir' notu."""
+    sym = re.sub(r'[^A-Za-z0-9]', '', data['coin']['symbol'].upper())
+    note = 'Not financial advice. Entertainment & education only. Do your own research.'
+    tiktok = f"{title}\n\n{note}\n\n#crypto #{sym} #cryptonews #altcoins #learnontiktok #fyp"
+    insta = (f"{title}\n\nFollow for a daily crypto mover breakdown 🌕💀\n{note}\n\n"
+             f"#crypto #{sym} #cryptocurrency #altcoins #cryptonews #bitcoin #investingtips #reels")
+    return tiktok, insta
+
+
+def send_social(mp4, title, url, data):
+    notify.document(mp4, f'🎬 Moon or Doom — günün videosu (TikTok/Instagram için)\n{title}\n{url}')
+    tiktok, insta = social_captions(title, data)
+    notify.copyable('🎵 TikTok açıklaması (kutuya dokun → kopyalanır):', tiktok)
+    notify.copyable('📸 Instagram açıklaması (kutuya dokun → kopyalanır):', insta)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-upload', action='store_true')
@@ -508,7 +525,8 @@ def main():
                       'script': sc['source'], 'video_id': video_id, 'privacy': mode, 'title': title})
         to_playlist(upload, kind, video_id)
         engage(upload, video_id, sc['format'], data)
-        notify.video(mp4, f'✅ {title}\n{url} ({mode})')
+        if today_count(hist) == 1:  # Telegram'a günde tek video: günün ilk Shorts'u (TikTok/Instagram için)
+            send_social(mp4, title, url, data)
     if failed:
         raise SystemExit(1)
 
