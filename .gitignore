@@ -5,3 +5,4 @@ client_secret*.json
 secrets*.env
 .env
 ornek_*.mp4
+social/
