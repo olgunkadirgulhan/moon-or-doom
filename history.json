@@ -1013,6 +1013,23 @@
       "privacy": "public",
       "title": "MINA -23.6% today — support & resistance levels 📊",
       "date": "2026-10-06 17:09"
+    },
+    {
+      "id": "crypto_2026-10-06_2043_gainer",
+      "coin": "meteora",
+      "symbol": "MET",
+      "price": 0.331409,
+      "change_24h_pct": 13.0,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "sr",
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "l0jIfk1CqDA",
+      "privacy": "public",
+      "title": "Support & resistance explained Explained with MET (+13.0% today) 📚",
+      "date": "2026-10-06 20:46"
     }
   ]
 }
