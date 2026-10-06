@@ -979,6 +979,40 @@
       "privacy": "public",
       "title": "Collector Crypt pumped +16.6%. Moon Max has questions 🤔",
       "date": "2026-10-05 21:55"
+    },
+    {
+      "id": "crypto_2026-10-06_1654_gainer",
+      "coin": "numeraire",
+      "symbol": "NMR",
+      "price": 16.39,
+      "change_24h_pct": 37.3,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "bmbjqocJEW8",
+      "privacy": "public",
+      "title": "Numeraire pumped +37.3%. Moon Max has questions 🤔",
+      "date": "2026-10-06 16:59"
+    },
+    {
+      "id": "crypto_2026-10-06_1654_loser",
+      "coin": "mina-protocol",
+      "symbol": "MINA",
+      "price": 0.123709,
+      "change_24h_pct": -23.6,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "0m5IOEx-yTA",
+      "privacy": "public",
+      "title": "MINA -23.6% today — support & resistance levels 📊",
+      "date": "2026-10-06 17:09"
     }
   ]
 }
