@@ -1030,6 +1030,23 @@
       "privacy": "public",
       "title": "Support & resistance explained Explained with MET (+13.0% today) 📚",
       "date": "2026-10-06 20:46"
+    },
+    {
+      "id": "crypto_2026-10-07_1546_loser",
+      "coin": "mina-protocol",
+      "symbol": "MINA",
+      "price": 0.093647,
+      "change_24h_pct": -24.4,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "ZF5qQbYRwVE",
+      "privacy": "public",
+      "title": "MINA -24.4% in 24h: the support to watch 👀",
+      "date": "2026-10-07 15:50"
     }
   ]
 }
