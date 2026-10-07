@@ -8,7 +8,7 @@ on:
     # Pazar/Çarşamba haftalık özet Whale Market Pulse'ta; aynı günleri ve konuyu kullanmıyoruz.
     # GitHub cron'u geciktiriyor/düşürüyor: saatlik tetiklenir, .github/slot_guard.py sadece
     # zamanı gelmiş ve yüklenmemiş slot varsa video yapar (boş çalışma ~15 sn).
-    - cron: "53 15-23 * * *"
+    - cron: "53 13-23 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -53,7 +53,7 @@ jobs:
       - id: g
         env:
           LOG_FILE: history.json
-          SLOTS: "16:00,18:00,20:30"
+          SLOTS: "13:30,18:00,20:30"  # ilk video (Telegram sosyal) 15:00 UTC = TR 18:00 gönderimine yetişsin
           PER_SLOT: "1"
           DAILY_MAX: "3"  # config.yaml daily_videos ile aynı tutulmalı
           SHORT_KINDS: "gainer,loser,manual"
