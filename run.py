@@ -446,7 +446,7 @@ def social_captions(title, data):
     note = 'Not financial advice. Entertainment & education only. Do your own research.'
     tiktok = f"{title}\n\n{note}\n\n#crypto #{sym} #cryptonews #altcoins #learnontiktok #fyp"
     insta = (f"{title}\n\nFollow for a daily crypto mover breakdown 🌕💀\n{note}\n\n"
-             f"#crypto #{sym} #cryptocurrency #altcoins #cryptonews #bitcoin #investingtips #reels")
+             f"#crypto #bitcoin #cryptocurrency #{sym} #altcoins")  # Instagram: en fazla 5, en geniş erişimli
     return tiktok, insta
 
 
