@@ -1064,6 +1064,23 @@
       "privacy": "public",
       "title": "SAND +22.7% in 24h: where's the next wall? 🧱",
       "date": "2026-10-07 18:59"
+    },
+    {
+      "id": "crypto_2026-10-07_2056_loser",
+      "coin": "sky",
+      "symbol": "SKY",
+      "price": 0.079128,
+      "change_24h_pct": -11.7,
+      "kind": "loser",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "tgAPyh_VpO4",
+      "privacy": "public",
+      "title": "SKY -11.7%… Bear Betty called it 💀",
+      "date": "2026-10-07 20:58"
     }
   ]
 }
