@@ -1047,6 +1047,23 @@
       "privacy": "public",
       "title": "MINA -24.4% in 24h: the support to watch 👀",
       "date": "2026-10-07 15:50"
+    },
+    {
+      "id": "crypto_2026-10-07_1854_gainer",
+      "coin": "the-sandbox",
+      "symbol": "SAND",
+      "price": 0.080456,
+      "change_24h_pct": 22.7,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "QPWnszb30eY",
+      "privacy": "public",
+      "title": "SAND +22.7% in 24h: where's the next wall? 🧱",
+      "date": "2026-10-07 18:59"
     }
   ]
 }
