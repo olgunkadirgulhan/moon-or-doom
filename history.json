@@ -1081,6 +1081,23 @@
       "privacy": "public",
       "title": "SKY -11.7%… Bear Betty called it 💀",
       "date": "2026-10-07 20:58"
+    },
+    {
+      "id": "crypto_2026-10-08_1454_gainer",
+      "coin": "starknet",
+      "symbol": "STRK",
+      "price": 0.061416,
+      "change_24h_pct": 26.6,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "JUg-KBCsQxQ",
+      "privacy": "public",
+      "title": "STRK just ran +26.6%. Chart Charlie checks the levels 📈",
+      "date": "2026-10-08 14:55"
     }
   ]
 }
