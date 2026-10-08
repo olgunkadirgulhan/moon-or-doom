@@ -1,6 +1,6 @@
 # Çöp Adam Kripto — ayarlar (tasarım: cizgi-kripto-yorum-kanali.md)
 
-daily_videos: 3            # günlük Shorts üst sınırı: 3 slot x 1 video (yükselen/düşen sırayla); para kazanma için hacim düşük tutulur
+daily_videos: 2            # 2026-10-08: zayıf izlenme → hacim 3→2 (slot başına 1, yükselen/düşen sırayla)
 pair_gap_minutes: 5        # aynı çalıştırmadaki iki video arası
 universe_pages: 2          # CoinGecko piyasa değerine göre ilk 500 coin içinden yükselen/düşen
 
