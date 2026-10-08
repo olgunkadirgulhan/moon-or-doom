@@ -1098,6 +1098,23 @@
       "privacy": "public",
       "title": "STRK just ran +26.6%. Chart Charlie checks the levels 📈",
       "date": "2026-10-08 14:55"
+    },
+    {
+      "id": "crypto_2026-10-08_1933_loser",
+      "coin": "the-sandbox",
+      "symbol": "SAND",
+      "price": 0.066672,
+      "change_24h_pct": -15.7,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "X7Bu8twl8XE",
+      "privacy": "public",
+      "title": "The Sandbox (SAND) -15.7% today — what even is it? 🤔",
+      "date": "2026-10-08 19:34"
     }
   ]
 }
