@@ -1132,6 +1132,22 @@
       "privacy": "public",
       "title": "What is RSI? Explained with KAIA (+43.3% today) 📚",
       "date": "2026-10-09 13:55"
+    },
+    {
+      "id": "long_school_2026-10-09_1554",
+      "kind": "school",
+      "coins": [
+        "bitcoin",
+        "sentient",
+        "pons",
+        "basic-attention-token"
+      ],
+      "video_id": "ndPo3AtsnFo",
+      "privacy": "public",
+      "title": "What Is RSI? RSI Indicator Explained With Cartoons | BTC, SENT, PONS & BAT Examples",
+      "format": "long",
+      "concept": "rsi",
+      "date": "2026-10-09 16:04"
     }
   ]
 }
