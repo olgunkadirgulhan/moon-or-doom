@@ -1115,6 +1115,23 @@
       "privacy": "public",
       "title": "The Sandbox (SAND) -15.7% today — what even is it? 🤔",
       "date": "2026-10-08 19:34"
+    },
+    {
+      "id": "crypto_2026-10-09_1354_gainer",
+      "coin": "kaia",
+      "symbol": "KAIA",
+      "price": 0.055219,
+      "change_24h_pct": 43.3,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "rsi",
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "upBge1_aazI",
+      "privacy": "public",
+      "title": "What is RSI? Explained with KAIA (+43.3% today) 📚",
+      "date": "2026-10-09 13:55"
     }
   ]
 }
