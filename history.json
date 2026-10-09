@@ -1148,6 +1148,23 @@
       "format": "long",
       "concept": "rsi",
       "date": "2026-10-09 16:04"
+    },
+    {
+      "id": "crypto_2026-10-09_2054_loser",
+      "coin": "sentient",
+      "symbol": "SENT",
+      "price": 0.02104023,
+      "change_24h_pct": -14.0,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "wuPFFANK2n0",
+      "privacy": "public",
+      "title": "Bear Betty vs SENT -14.0% 😂",
+      "date": "2026-10-09 20:55"
     }
   ]
 }
