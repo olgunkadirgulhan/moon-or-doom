@@ -1182,6 +1182,23 @@
       "privacy": "public",
       "title": "Basic Attention pumped +18.2%. Moon Max has questions 🤔",
       "date": "2026-10-10 13:56"
+    },
+    {
+      "id": "crypto_2026-10-10_2054_gainer",
+      "coin": "celestia",
+      "symbol": "TIA",
+      "price": 0.581737,
+      "change_24h_pct": 24.2,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "X2N6GPM1ms0",
+      "privacy": "public",
+      "title": "TIA key levels: resistance $0.5857, support $0.5142 📊",
+      "date": "2026-10-10 20:55"
     }
   ]
 }
