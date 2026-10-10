@@ -486,9 +486,10 @@ def main():
         return run_long(args.long, args, mode, hist)
 
     kinds = ['manual'] if args.coin or args.data else [args.only] if args.only else list(picker.KINDS)
-    if len(kinds) > 1:  # slot başına tek video: yükselen ve düşen sırayla (hacim = şablon sinyali)
-        last = next((v.get('kind') for v in reversed(hist.get('videos', [])) if v.get('kind') in picker.KINDS), None)
-        kinds = [k for k in kinds if k != last][:1] or kinds[:1]
+    if len(kinds) > 1:  # slot başına tek video: çoğunlukla yükselen, 4 videoda bir düşen
+        # 2026-10-10: yükselen videolar 400-650 izlenme, düşenler 1-5 → düşen yalnızca çeşitlilik için
+        recent = [v.get('kind') for v in hist.get('videos', []) if v.get('kind') in picker.KINDS][-3:]
+        kinds = ['gainer'] if 'loser' in recent or len(recent) < 3 else ['loser']
     log(f"videos: {', '.join(kinds)} | upload mode: {mode}")
     if mode != 'off':
         left = CONFIG['daily_videos'] - today_count(hist)
