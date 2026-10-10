@@ -1165,6 +1165,23 @@
       "privacy": "public",
       "title": "Bear Betty vs SENT -14.0% 😂",
       "date": "2026-10-09 20:55"
+    },
+    {
+      "id": "crypto_2026-10-10_1354_gainer",
+      "coin": "basic-attention-token",
+      "symbol": "BAT",
+      "price": 0.131543,
+      "change_24h_pct": 18.2,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "vTqD-D9DJNk",
+      "privacy": "public",
+      "title": "Basic Attention pumped +18.2%. Moon Max has questions 🤔",
+      "date": "2026-10-10 13:56"
     }
   ]
 }
