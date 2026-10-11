@@ -1216,6 +1216,23 @@
       "privacy": "public",
       "title": "Moon Max lost it when CFX went +26.8% 😭",
       "date": "2026-10-11 13:55"
+    },
+    {
+      "id": "crypto_2026-10-11_2054_loser",
+      "coin": "pons",
+      "symbol": "PONS",
+      "price": 0.353862,
+      "change_24h_pct": -4.4,
+      "kind": "loser",
+      "format": "school",
+      "concept": "candles",
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "XOAl1bAfgWE",
+      "privacy": "public",
+      "title": "Pons dropped 4.4%. Where's the floor? 📉",
+      "date": "2026-10-11 20:55"
     }
   ]
 }
