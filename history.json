@@ -1250,6 +1250,23 @@
       "privacy": "public",
       "title": "ZRO +15.7% today and Moon Max is NOT okay 🚀",
       "date": "2026-10-12 13:55"
+    },
+    {
+      "id": "crypto_2026-10-12_2054_gainer",
+      "coin": "blockstack",
+      "symbol": "STX",
+      "price": 0.445641,
+      "change_24h_pct": 12.1,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "aSdteejXYH8",
+      "privacy": "public",
+      "title": "When STX pumps 12.1% in a day 😂",
+      "date": "2026-10-12 20:55"
     }
   ]
 }
