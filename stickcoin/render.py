@@ -480,10 +480,18 @@ def render(video, out_dir, preview_png=None):
     n = int(total * FPS)
     acts = R.acts.get(lines[0]['coin'], {})
     snap = min(n - 1, int((acts.get('highlight_scenario_down', acts.get('draw_support', total * 0.5)) + 1.2) * FPS))
+    loop = Lo['H'] > Lo['W']   # dikey Short: son 0.45 sn ilk kareye karışır (kesintisiz döngü)
+    first = None
     for i in range(n):
         t = i / FPS
         R.frame(t)
-        proc.stdin.write(bytes(R.surf.get_data()))
+        buf = bytes(R.surf.get_data())
+        if i == 0:
+            first = np.frombuffer(buf, np.uint8).astype(np.float32)
+        if loop and t > total - 0.45:
+            k = min(1.0, (t - (total - 0.45)) / 0.45)
+            buf = (np.frombuffer(buf, np.uint8).astype(np.float32) * (1 - k) + first * k).astype(np.uint8).tobytes()
+        proc.stdin.write(buf)
         if preview_png and i == snap:
             R.surf.write_to_png(str(preview_png))
         if i % (FPS * 20) == 0:
