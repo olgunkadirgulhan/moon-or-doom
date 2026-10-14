@@ -1284,6 +1284,23 @@
       "privacy": "public",
       "title": "BAT +20.5% today — support & resistance levels 📊",
       "date": "2026-10-13 13:56"
+    },
+    {
+      "id": "crypto_2026-10-14_1354_loser",
+      "coin": "sonic-3",
+      "symbol": "S",
+      "price": 0.055419,
+      "change_24h_pct": -22.3,
+      "kind": "loser",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "ncZlukSSlww",
+      "privacy": "public",
+      "title": "Sonic dropped 22.3%. Where's the floor? 📉",
+      "date": "2026-10-14 13:56"
     }
   ]
 }
