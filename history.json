@@ -1335,6 +1335,22 @@
       "privacy": "public",
       "title": "Moon Max vs Bear Betty: TIA +33.3% 🥊",
       "date": "2026-10-16 13:55"
+    },
+    {
+      "id": "long_school_2026-10-16_1554",
+      "kind": "school",
+      "coins": [
+        "bitcoin",
+        "celestia",
+        "starknet",
+        "injective-protocol"
+      ],
+      "video_id": "rH3bes-qzL0",
+      "privacy": "public",
+      "title": "How to Read Candlestick Charts (Explained With Cartoons) | BTC, TIA, STRK & INJ Examples",
+      "format": "long",
+      "concept": "candles",
+      "date": "2026-10-16 16:02"
     }
   ]
 }
