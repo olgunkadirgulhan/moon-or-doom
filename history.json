@@ -1318,6 +1318,23 @@
       "privacy": "public",
       "title": "ZK just ran +6.7%. Chart Charlie checks the levels 📈",
       "date": "2026-10-15 13:56"
+    },
+    {
+      "id": "crypto_2026-10-16_1354_gainer",
+      "coin": "celestia",
+      "symbol": "TIA",
+      "price": 0.708007,
+      "change_24h_pct": 33.3,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "volume",
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "9R6eWJtQeIc",
+      "privacy": "public",
+      "title": "Moon Max vs Bear Betty: TIA +33.3% 🥊",
+      "date": "2026-10-16 13:55"
     }
   ]
 }
