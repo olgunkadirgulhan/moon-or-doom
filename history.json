@@ -1351,6 +1351,23 @@
       "format": "long",
       "concept": "candles",
       "date": "2026-10-16 16:02"
+    },
+    {
+      "id": "crypto_2026-10-17_1354_gainer",
+      "coin": "the-sandbox",
+      "symbol": "SAND",
+      "price": 0.059357,
+      "change_24h_pct": 8.5,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "z0u3ZG_ko3Q",
+      "privacy": "public",
+      "title": "SAND +8.5% in 24h: where's the next wall? 🧱",
+      "date": "2026-10-17 13:55"
     }
   ]
 }
