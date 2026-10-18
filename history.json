@@ -1368,6 +1368,23 @@
       "privacy": "public",
       "title": "SAND +8.5% in 24h: where's the next wall? 🧱",
       "date": "2026-10-17 13:55"
+    },
+    {
+      "id": "crypto_2026-10-18_1354_loser",
+      "coin": "pyth-network",
+      "symbol": "PYTH",
+      "price": 0.075392,
+      "change_24h_pct": -11.0,
+      "kind": "loser",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "uSwBLDo2EG8",
+      "privacy": "public",
+      "title": "Pyth Network dropped 11.0%. Where's the floor? 📉",
+      "date": "2026-10-18 13:55"
     }
   ]
 }
