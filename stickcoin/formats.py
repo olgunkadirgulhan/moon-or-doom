@@ -500,7 +500,7 @@ def pick_format(hist, rnd, data, avoid=()):
     return rnd.choices(options, weights)[0]
 
 
-FORMAT_WEIGHTS = {'skit': 3, 'levels': 1, 'what_is': 2, 'school': 2}  # levels = seviye haritası, sinyal gibi algılanmasın diye seyrek
+FORMAT_WEIGHTS = {'skit': 3, 'levels': 2, 'what_is': 2, 'school': 1}  # 2026-10-20: levels 423-796 izlenme, school en zayıf  # levels = seviye haritası, sinyal gibi algılanmasın diye seyrek
 
 
 def pick_concept(hist, rnd, data):

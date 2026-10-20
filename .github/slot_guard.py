@@ -58,8 +58,12 @@ def main():
             print(f'last upload {gap:.0f} min ago')
             return output(False)
 
+    extra = 0
     for item in filter(None, (s.strip() for s in os.environ.get('LONG', '').split(','))):
         day, at, mode = item.split()
+        if mode == os.environ.get('SHORT_MODE', 'short'):   # haftalık ek Short slotu (ör. "fri 19:00 shorts")
+            extra += day == weekday and hhmm >= at
+            continue
         if day == weekday and hhmm >= at and not any(k == mode for _, k in done):
             print(f'long "{mode}" due since {at}, not uploaded today')
             return output(True, mode)
@@ -70,6 +74,7 @@ def main():
     if os.environ.get('DAILY_MAX'):
         # run.py'nin günlük tavanını aşan slotlar için boşuna video işi başlatma
         due = min(due, int(os.environ['DAILY_MAX']))
+    due += extra
     made = sum(1 for _, k in done if k in kinds)
     print(f'{hhmm} UTC: shorts due {due}, uploaded today {made}')
     output(made < due, os.environ.get('SHORT_MODE', 'short'))
