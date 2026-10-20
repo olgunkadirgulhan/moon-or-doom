@@ -1402,6 +1402,23 @@
       "privacy": "public",
       "title": "Chart School: Support & resistance explained — ARB example 📚",
       "date": "2026-10-19 13:55"
+    },
+    {
+      "id": "crypto_2026-10-20_1354_gainer",
+      "coin": "collector-crypt",
+      "symbol": "CARDS",
+      "price": 0.316892,
+      "change_24h_pct": 15.2,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "bDHbtTak9gY",
+      "privacy": "public",
+      "title": "CARDS key levels: resistance $0.3267, support $0.2979 📊",
+      "date": "2026-10-20 13:56"
     }
   ]
 }
