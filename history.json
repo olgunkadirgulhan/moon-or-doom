@@ -1436,6 +1436,23 @@
       "privacy": "public",
       "title": "Convex Finance (CVX) +23.7% today — what even is it? 🤔",
       "date": "2026-10-21 13:56"
+    },
+    {
+      "id": "crypto_2026-10-22_1355_gainer",
+      "coin": "venice-token",
+      "symbol": "VVV",
+      "price": 27.13,
+      "change_24h_pct": 4.2,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "trend",
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "3byNNCL0fok",
+      "privacy": "public",
+      "title": "Chart School: Moving averages in 60 seconds — VVV example 📚",
+      "date": "2026-10-22 13:57"
     }
   ]
 }
