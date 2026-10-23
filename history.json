@@ -1453,6 +1453,23 @@
       "privacy": "public",
       "title": "Chart School: Moving averages in 60 seconds — VVV example 📚",
       "date": "2026-10-22 13:57"
+    },
+    {
+      "id": "crypto_2026-10-23_1419_gainer",
+      "coin": "pepe",
+      "symbol": "PEPE",
+      "price": 4.92e-06,
+      "change_24h_pct": 11.1,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "W16OF7PLU3s",
+      "privacy": "public",
+      "title": "Pepe pumped +11.1%. Moon Max has questions 🤔",
+      "date": "2026-10-23 14:27"
     }
   ]
 }
