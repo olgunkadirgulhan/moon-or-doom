@@ -1487,6 +1487,23 @@
       "privacy": "public",
       "title": "Sentient pumped +8.8%. Moon Max has questions 🤔",
       "date": "2026-10-23 20:24"
+    },
+    {
+      "id": "crypto_2026-10-24_1354_gainer",
+      "coin": "kamino",
+      "symbol": "KMNO",
+      "price": 0.04018658,
+      "change_24h_pct": 1.8,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "KordwjOtEIU",
+      "privacy": "public",
+      "title": "KMNO +1.8% today and Moon Max is NOT okay 🚀",
+      "date": "2026-10-24 13:56"
     }
   ]
 }
