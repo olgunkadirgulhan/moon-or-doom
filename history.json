@@ -1521,6 +1521,23 @@
       "privacy": "public",
       "title": "Chart School: Why volume matters — GRASS example 📚",
       "date": "2026-10-25 14:00"
+    },
+    {
+      "id": "crypto_2026-10-26_1354_gainer",
+      "coin": "pyth-network",
+      "symbol": "PYTH",
+      "price": 0.074893,
+      "change_24h_pct": 5.1,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "qPvVKjOXjkY",
+      "privacy": "public",
+      "title": "Pyth Network (PYTH) +5.1% today — what even is it? 🤔",
+      "date": "2026-10-26 13:59"
     }
   ]
 }
