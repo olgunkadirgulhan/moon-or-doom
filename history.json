@@ -1538,6 +1538,23 @@
       "privacy": "public",
       "title": "Pyth Network (PYTH) +5.1% today — what even is it? 🤔",
       "date": "2026-10-26 13:59"
+    },
+    {
+      "id": "crypto_2026-10-27_1403_gainer",
+      "coin": "morpho",
+      "symbol": "MORPHO",
+      "price": 2.16,
+      "change_24h_pct": 7.3,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "NRwKkYZUOk8",
+      "privacy": "public",
+      "title": "MORPHO +7.3% today — support & resistance levels 📊",
+      "date": "2026-10-27 14:06"
     }
   ]
 }
