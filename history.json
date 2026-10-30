@@ -1589,6 +1589,23 @@
       "privacy": "public",
       "title": "Moon Max lost it when HYPE went +14.1% 😭",
       "date": "2026-10-29 13:57"
+    },
+    {
+      "id": "crypto_2026-10-30_1353_gainer",
+      "coin": "thorchain",
+      "symbol": "RUNE",
+      "price": 0.648992,
+      "change_24h_pct": 6.7,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "XYreSRcr17c",
+      "privacy": "public",
+      "title": "RUNE +6.7% in 24h: where's the next wall? 🧱",
+      "date": "2026-10-30 14:00"
     }
   ]
 }
