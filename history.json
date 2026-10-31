@@ -1623,6 +1623,23 @@
       "privacy": "public",
       "title": "What is RSI? Explained with XPL (+4.0% today) 📚",
       "date": "2026-10-30 20:04"
+    },
+    {
+      "id": "crypto_2026-10-31_1354_gainer",
+      "coin": "blockstack",
+      "symbol": "STX",
+      "price": 0.318125,
+      "change_24h_pct": 14.2,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "j5bJv5aZml4",
+      "privacy": "public",
+      "title": "STX just ran +14.2%. Chart Charlie checks the levels 📈",
+      "date": "2026-10-31 13:58"
     }
   ]
 }
