@@ -1640,6 +1640,23 @@
       "privacy": "public",
       "title": "STX just ran +14.2%. Chart Charlie checks the levels 📈",
       "date": "2026-10-31 13:58"
+    },
+    {
+      "id": "crypto_2026-11-01_1354_gainer",
+      "coin": "lighter",
+      "symbol": "LIT",
+      "price": 3.3,
+      "change_24h_pct": 20.4,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "OlUgO9K8sCw",
+      "privacy": "public",
+      "title": "LIT is today's top gainer (+20.4%) — the levels on the chart 📈",
+      "date": "2026-11-01 13:56"
     }
   ]
 }
