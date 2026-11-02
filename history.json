@@ -1657,6 +1657,23 @@
       "privacy": "public",
       "title": "LIT is today's top gainer (+20.4%) — the levels on the chart 📈",
       "date": "2026-11-01 13:56"
+    },
+    {
+      "id": "crypto_2026-11-02_1354_gainer",
+      "coin": "tron",
+      "symbol": "TRX",
+      "price": 0.317311,
+      "change_24h_pct": 2.2,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "zdMShFOp-yo",
+      "privacy": "public",
+      "title": "TRON (TRX) +2.2% today — what even is it? 🤔",
+      "date": "2026-11-02 13:55"
     }
   ]
 }
