@@ -1674,6 +1674,23 @@
       "privacy": "public",
       "title": "TRON (TRX) +2.2% today — what even is it? 🤔",
       "date": "2026-11-02 13:55"
+    },
+    {
+      "id": "crypto_2026-11-03_1354_gainer",
+      "coin": "thorchain",
+      "symbol": "RUNE",
+      "price": 0.581263,
+      "change_24h_pct": 9.3,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "XKplYGo770g",
+      "privacy": "public",
+      "title": "When RUNE pumps 9.3% in a day 😂",
+      "date": "2026-11-03 14:00"
     }
   ]
 }
