@@ -1691,6 +1691,23 @@
       "privacy": "public",
       "title": "When RUNE pumps 9.3% in a day 😂",
       "date": "2026-11-03 14:00"
+    },
+    {
+      "id": "crypto_2026-11-04_1355_gainer",
+      "coin": "basic-attention-token",
+      "symbol": "BAT",
+      "price": 0.138621,
+      "change_24h_pct": 9.5,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "rc2Cxx1OGzg",
+      "privacy": "public",
+      "title": "BAT key levels: resistance $0.1543, support $0.1363 📊",
+      "date": "2026-11-04 13:56"
     }
   ]
 }
