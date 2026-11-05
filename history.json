@@ -1708,6 +1708,23 @@
       "privacy": "public",
       "title": "BAT key levels: resistance $0.1543, support $0.1363 📊",
       "date": "2026-11-04 13:56"
+    },
+    {
+      "id": "crypto_2026-11-05_1355_gainer",
+      "coin": "instadapp",
+      "symbol": "FLUID",
+      "price": 2.65,
+      "change_24h_pct": 23.0,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "candles",
+      "hook": "question",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "8UX-JEWdd10",
+      "privacy": "public",
+      "title": "How to read candlesticks Explained with FLUID (+23.0% today) 📚",
+      "date": "2026-11-05 14:00"
     }
   ]
 }
