@@ -1725,6 +1725,23 @@
       "privacy": "public",
       "title": "How to read candlesticks Explained with FLUID (+23.0% today) 📚",
       "date": "2026-11-05 14:00"
+    },
+    {
+      "id": "crypto_2026-11-06_1354_gainer",
+      "coin": "arbitrum",
+      "symbol": "ARB",
+      "price": 0.168781,
+      "change_24h_pct": 4.0,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "Gc7qH677yL4",
+      "privacy": "public",
+      "title": "Arbitrum pumped +4.0%. Moon Max has questions 🤔",
+      "date": "2026-11-06 13:57"
     }
   ]
 }
