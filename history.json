@@ -1742,6 +1742,23 @@
       "privacy": "public",
       "title": "Arbitrum pumped +4.0%. Moon Max has questions 🤔",
       "date": "2026-11-06 13:57"
+    },
+    {
+      "id": "crypto_2026-11-06_1954_gainer",
+      "coin": "tezos",
+      "symbol": "XTZ",
+      "price": 0.283682,
+      "change_24h_pct": 10.3,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "UH7-2b6cEjo",
+      "privacy": "public",
+      "title": "What is Tezos? XTZ is today's top gainer (+10.3%) 🤔",
+      "date": "2026-11-06 19:57"
     }
   ]
 }
