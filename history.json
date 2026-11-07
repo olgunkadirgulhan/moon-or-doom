@@ -1759,6 +1759,23 @@
       "privacy": "public",
       "title": "What is Tezos? XTZ is today's top gainer (+10.3%) 🤔",
       "date": "2026-11-06 19:57"
+    },
+    {
+      "id": "crypto_2026-11-07_1354_gainer",
+      "coin": "meteora",
+      "symbol": "MET",
+      "price": 0.304402,
+      "change_24h_pct": 8.5,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "trend",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "0CkrNkjKQAA",
+      "privacy": "public",
+      "title": "Chart School: Moving averages in 60 seconds — MET example 📚",
+      "date": "2026-11-07 13:57"
     }
   ]
 }
