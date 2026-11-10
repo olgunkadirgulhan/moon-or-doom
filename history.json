@@ -1810,6 +1810,23 @@
       "privacy": "public",
       "title": "Moon Max vs Bear Betty: ARB +8.5% 🥊",
       "date": "2026-11-09 13:57"
+    },
+    {
+      "id": "crypto_2026-11-10_1354_gainer",
+      "coin": "jupiter-exchange-solana",
+      "symbol": "JUP",
+      "price": 0.253161,
+      "change_24h_pct": 6.0,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "uRDAP-jg-OY",
+      "privacy": "public",
+      "title": "Moon Max lost it when JUP went +6.0% 😭",
+      "date": "2026-11-10 13:57"
     }
   ]
 }
