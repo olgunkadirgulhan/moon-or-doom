@@ -458,7 +458,7 @@ def send_social(mp4, title, url, data):
     shutil.copy(mp4, soc / 'video.mp4')
     (soc / 'post.json').write_text(json.dumps({'channel': 'Moon or Doom', 'title': title, 'url': url, 'tiktok': tiktok,
                                                'instagram': insta}, ensure_ascii=False, indent=1), encoding='utf-8')
-    notify.document(mp4, f'🎬 Moon or Doom — günün videosu (TikTok/Instagram için)\n{title}\n{url}')
+    notify.document(mp4, f'✅ Moon or Doom YouTube\'da paylaşıldı\n{title}\n{url}')
     notify.copyable('🎵 TikTok açıklaması (kutuya dokun → kopyalanır):', tiktok)
     notify.copyable('📸 Instagram açıklaması (kutuya dokun → kopyalanır):', insta)
 
