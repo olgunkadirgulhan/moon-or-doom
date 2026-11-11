@@ -1827,6 +1827,23 @@
       "privacy": "public",
       "title": "Moon Max lost it when JUP went +6.0% 😭",
       "date": "2026-11-10 13:57"
+    },
+    {
+      "id": "crypto_2026-11-11_1655_gainer",
+      "coin": "midnight-3",
+      "symbol": "NIGHT",
+      "price": 0.04730992,
+      "change_24h_pct": 14.7,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "sr",
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "HnG08dWPxws",
+      "privacy": "public",
+      "title": "Chart School: Support & resistance explained — NIGHT example 📚",
+      "date": "2026-11-11 17:03"
     }
   ]
 }
