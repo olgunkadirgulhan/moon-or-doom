@@ -4,12 +4,19 @@ import os
 import requests
 
 
+def _quiet():   # kullanıcı isteği (2026-11-12): TR 21:00–09:00 arası Telegram bildirimi sessiz gelsin
+    from datetime import datetime, timedelta, timezone
+    h = (datetime.now(timezone.utc) + timedelta(hours=3)).hour
+    return {'disable_notification': 'true'} if (h >= 21 or h < 9) else {}
+
+
 def configured():
     return bool(os.environ.get('TELEGRAM_BOT_TOKEN') and os.environ.get('TELEGRAM_CHAT_ID'))
 
 
 def _api(method, **kw):
     url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/{method}"
+    if 'data' in kw: kw['data'] = {**kw['data'], **_quiet()}
     r = requests.post(url, timeout=120, **kw)
     r.raise_for_status()
 
