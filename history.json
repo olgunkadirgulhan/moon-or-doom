@@ -1861,6 +1861,23 @@
       "privacy": "public",
       "title": "JUST pumped +1.4%. Moon Max has questions 🤔",
       "date": "2026-11-12 13:55"
+    },
+    {
+      "id": "crypto_2026-11-13_1354_gainer",
+      "coin": "injective-protocol",
+      "symbol": "INJ",
+      "price": 8.21,
+      "change_24h_pct": 10.1,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "Jf-p_EHyZFM",
+      "privacy": "public",
+      "title": "INJ +10.1% today and Moon Max is NOT okay 🚀",
+      "date": "2026-11-13 13:55"
     }
   ]
 }
