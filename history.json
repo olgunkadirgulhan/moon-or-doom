@@ -1895,6 +1895,23 @@
       "privacy": "public",
       "title": "ZRO +5.7% in 24h: where's the next wall? 🧱",
       "date": "2026-11-13 19:56"
+    },
+    {
+      "id": "crypto_2026-11-14_1354_gainer",
+      "coin": "midnight-3",
+      "symbol": "NIGHT",
+      "price": 0.050059,
+      "change_24h_pct": 9.7,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "volume",
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "Se-Nn3O77bk",
+      "privacy": "public",
+      "title": "NIGHT just ran +9.7%. Chart Charlie checks the levels 📈",
+      "date": "2026-11-14 14:00"
     }
   ]
 }
