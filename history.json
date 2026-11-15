@@ -1912,6 +1912,23 @@
       "privacy": "public",
       "title": "NIGHT just ran +9.7%. Chart Charlie checks the levels 📈",
       "date": "2026-11-14 14:00"
+    },
+    {
+      "id": "crypto_2026-11-15_1354_gainer",
+      "coin": "venice-token",
+      "symbol": "VVV",
+      "price": 19.71,
+      "change_24h_pct": 8.9,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "Rf0x7wCcxQs",
+      "privacy": "public",
+      "title": "VVV is today's top gainer (+8.9%) — the levels on the chart 📈",
+      "date": "2026-11-15 13:57"
     }
   ]
 }
