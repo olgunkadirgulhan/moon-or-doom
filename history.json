@@ -1929,6 +1929,23 @@
       "privacy": "public",
       "title": "VVV is today's top gainer (+8.9%) — the levels on the chart 📈",
       "date": "2026-11-15 13:57"
+    },
+    {
+      "id": "crypto_2026-11-16_1354_gainer",
+      "coin": "falcon-finance-ff",
+      "symbol": "FF",
+      "price": 0.099778,
+      "change_24h_pct": 4.1,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "Q72PZQ4Tllw",
+      "privacy": "public",
+      "title": "What is Falcon Finance? FF is one of today's top gainers (+4.1%) 🤔",
+      "date": "2026-11-16 14:00"
     }
   ]
 }
