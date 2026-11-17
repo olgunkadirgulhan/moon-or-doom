@@ -1946,6 +1946,23 @@
       "privacy": "public",
       "title": "What is Falcon Finance? FF is one of today's top gainers (+4.1%) 🤔",
       "date": "2026-11-16 14:00"
+    },
+    {
+      "id": "crypto_2026-11-17_1354_gainer",
+      "coin": "lighter",
+      "symbol": "LIT",
+      "price": 2.97,
+      "change_24h_pct": 14.1,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "candles",
+      "hook": "bold_claim",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "u8VkgTNTkKg",
+      "privacy": "public",
+      "title": "How to read candlesticks Explained with LIT (+14.1% today) 📚",
+      "date": "2026-11-17 13:55"
     }
   ]
 }
