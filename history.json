@@ -1963,6 +1963,23 @@
       "privacy": "public",
       "title": "How to read candlesticks Explained with LIT (+14.1% today) 📚",
       "date": "2026-11-17 13:55"
+    },
+    {
+      "id": "crypto_2026-11-18_1411_gainer",
+      "coin": "plasma",
+      "symbol": "XPL",
+      "price": 0.04691776,
+      "change_24h_pct": 4.6,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "OGPW1CJmuTY",
+      "privacy": "public",
+      "title": "When XPL pumps 4.6% in a day 😂",
+      "date": "2026-11-18 14:13"
     }
   ]
 }
