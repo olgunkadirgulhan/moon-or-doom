@@ -1980,6 +1980,23 @@
       "privacy": "public",
       "title": "When XPL pumps 4.6% in a day 😂",
       "date": "2026-11-18 14:13"
+    },
+    {
+      "id": "crypto_2026-11-19_1401_gainer",
+      "coin": "terra-luna",
+      "symbol": "LUNC",
+      "price": 4.657e-05,
+      "change_24h_pct": 19.1,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "cQQb2fQFydU",
+      "privacy": "public",
+      "title": "LUNC key levels: resistance $0.00004674, support $0.00004465 📊",
+      "date": "2026-11-19 14:09"
     }
   ]
 }
