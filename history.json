@@ -2014,6 +2014,23 @@
       "privacy": "public",
       "title": "What is JUST? JST is one of today's top gainers (+1.0%) 🤔",
       "date": "2026-11-20 13:58"
+    },
+    {
+      "id": "crypto_2026-11-20_1954_gainer",
+      "coin": "monad",
+      "symbol": "MON",
+      "price": 0.01322027,
+      "change_24h_pct": -2.4,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "b-I8IoWaRUg",
+      "privacy": "public",
+      "title": "MON -2.4% in 24h: the support to watch 👀",
+      "date": "2026-11-20 19:56"
     }
   ]
 }
