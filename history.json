@@ -2031,6 +2031,23 @@
       "privacy": "public",
       "title": "MON -2.4% in 24h: the support to watch 👀",
       "date": "2026-11-20 19:56"
+    },
+    {
+      "id": "crypto_2026-11-21_1354_gainer",
+      "coin": "venice-token",
+      "symbol": "VVV",
+      "price": 23.24,
+      "change_24h_pct": 12.8,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "reality_check",
+      "script": "gemini",
+      "video_id": "OtRxUCwFbKo",
+      "privacy": "public",
+      "title": "VVV +12.8% today — support & resistance levels 📊",
+      "date": "2026-11-21 13:55"
     }
   ]
 }
