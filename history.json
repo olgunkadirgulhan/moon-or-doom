@@ -2065,6 +2065,23 @@
       "privacy": "public",
       "title": "Moon Max lost it when NIGHT went +13.0% 😭",
       "date": "2026-11-22 13:56"
+    },
+    {
+      "id": "crypto_2026-11-23_1405_gainer",
+      "coin": "prometeus",
+      "symbol": "PROM",
+      "price": 5.89,
+      "change_24h_pct": 19.0,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "kUa3MtUDwH8",
+      "privacy": "public",
+      "title": "Prom pumped +19.0%. Moon Max has questions 🤔",
+      "date": "2026-11-23 14:10"
     }
   ]
 }
