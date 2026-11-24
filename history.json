@@ -2082,6 +2082,23 @@
       "privacy": "public",
       "title": "Prom pumped +19.0%. Moon Max has questions 🤔",
       "date": "2026-11-23 14:10"
+    },
+    {
+      "id": "crypto_2026-11-24_1354_gainer",
+      "coin": "terra-luna",
+      "symbol": "LUNC",
+      "price": 4.482e-05,
+      "change_24h_pct": 6.5,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "callback",
+      "script": "template",
+      "video_id": "ioyDue1eln0",
+      "privacy": "public",
+      "title": "Terra Luna Classic pumped +6.5%. Moon Max has questions 🤔",
+      "date": "2026-11-24 14:03"
     }
   ]
 }
