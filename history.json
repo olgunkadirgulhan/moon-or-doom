@@ -2099,6 +2099,23 @@
       "privacy": "public",
       "title": "Terra Luna Classic pumped +6.5%. Moon Max has questions 🤔",
       "date": "2026-11-24 14:03"
+    },
+    {
+      "id": "crypto_2026-11-25_1354_gainer",
+      "coin": "sky",
+      "symbol": "SKY",
+      "price": 0.03874301,
+      "change_24h_pct": 3.0,
+      "kind": "gainer",
+      "format": "levels",
+      "concept": null,
+      "hook": "question",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "_CtRTUfi3p4",
+      "privacy": "public",
+      "title": "Sky pumped +3.0%. Moon Max has questions 🤔",
+      "date": "2026-11-25 13:56"
     }
   ]
 }
