@@ -2133,6 +2133,23 @@
       "privacy": "public",
       "title": "SKY +22.7% in 24h: where's the next wall? 🧱",
       "date": "2026-11-26 13:57"
+    },
+    {
+      "id": "crypto_2026-11-27_1354_gainer",
+      "coin": "fetch-ai",
+      "symbol": "FET",
+      "price": 0.130013,
+      "change_24h_pct": 12.6,
+      "kind": "gainer",
+      "format": "skit",
+      "concept": null,
+      "hook": "bold_claim",
+      "punch": "reality_check",
+      "script": "template",
+      "video_id": "LR-0mCyaSmw",
+      "privacy": "public",
+      "title": "Moon Max vs Bear Betty: FET +12.6% 🥊",
+      "date": "2026-11-27 13:58"
     }
   ]
 }
