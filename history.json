@@ -2150,6 +2150,23 @@
       "privacy": "public",
       "title": "Moon Max vs Bear Betty: FET +12.6% 🥊",
       "date": "2026-11-27 13:58"
+    },
+    {
+      "id": "crypto_2026-11-27_1954_gainer",
+      "coin": "lighter",
+      "symbol": "LIT",
+      "price": 2.59,
+      "change_24h_pct": 5.0,
+      "kind": "gainer",
+      "format": "what_is",
+      "concept": null,
+      "hook": "reaction",
+      "punch": "role_reversal",
+      "script": "gemini",
+      "video_id": "6QtJGTFR3Qs",
+      "privacy": "public",
+      "title": "Lighter pumped +5.0%. Moon Max has questions 🤔",
+      "date": "2026-11-27 19:56"
     }
   ]
 }
