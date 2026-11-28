@@ -2167,6 +2167,23 @@
       "privacy": "public",
       "title": "Lighter pumped +5.0%. Moon Max has questions 🤔",
       "date": "2026-11-27 19:56"
+    },
+    {
+      "id": "crypto_2026-11-28_1354_gainer",
+      "coin": "midnight-3",
+      "symbol": "NIGHT",
+      "price": 0.053952,
+      "change_24h_pct": 8.7,
+      "kind": "gainer",
+      "format": "school",
+      "concept": "rsi",
+      "hook": "question",
+      "punch": "callback",
+      "script": "gemini",
+      "video_id": "KDl-pNjV9M8",
+      "privacy": "public",
+      "title": "Chart School: What is RSI? — NIGHT example 📚",
+      "date": "2026-11-28 13:55"
     }
   ]
 }
